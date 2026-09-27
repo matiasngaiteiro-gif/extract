@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>Extracto Importado · Manual de marca</title>
+  <meta name="description" content="Manual de marca interactivo de Extracto Importado: logo, colores, tipografía, voz, producto, aplicaciones y herramientas del equipo.">
+  <!-- Vista previa al compartir (WhatsApp, LinkedIn, mail).
+       Para máxima compatibilidad, reemplazá "media/og-extracto.jpg" por la dirección completa,
+       por ejemplo https://USUARIO.github.io/REPOSITORIO/media/og-extracto.jpg -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="Extracto Importado">
+  <meta property="og:title" content="Extracto Importado · Manual de marca">
+  <meta property="og:description" content="La precisión de un original. Logo, colores, tipografía, voz, producto y kit de descargas de Extracto Importado.">
+  <meta property="og:image" content="media/og-extracto.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Extracto Importado · Manual de marca. La precisión de un original.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Extracto Importado · Manual de marca">
+  <meta name="twitter:description" content="La precisión de un original. Logo, colores, tipografía, voz, producto y kit de descargas de Extracto Importado.">
+  <meta name="twitter:image" content="media/og-extracto.jpg">
+  <link rel="icon" type="image/svg+xml" href="media/isotipo.svg">
+  <link rel="alternate icon" type="image/png" href="media/descargas/png/isotipo.png">
+  <link rel="preload" href="fonts/gotham-light.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/gotham-book.otf" as="font" type="font/otf" crossorigin>
+  <link rel="stylesheet" href="style.css?v=2026-09-27-ex2">
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <div id="progress" class="progress" role="presentation"><span></span></div>
+
+  <header class="header" id="header">
+    <div class="header-bar">
+      <a href="#inicio" class="header-logo" aria-label="Extracto Importado · Ir al inicio">
+        <img id="navLogo" src="media/logo-extracto-white.svg" alt="Extracto Importado">
+      </a>
+      <nav id="siteNav" class="site-nav" aria-label="Secciones del manual">
+        <ul id="navList"></ul>
+      </nav>
+      <div class="header-right">
+        <button id="searchBtn" class="present-btn search-btn" type="button" aria-label="Buscar en el manual" title="Buscar (tecla /)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+          <span>Buscar</span>
+        </button>
+        <span class="header-meta"><span id="navLabel">Manual de marca</span> <b id="navVersion"></b></span>
+        <button id="presentBtn" class="present-btn" type="button" aria-label="Iniciar modo presentación" title="Modo presentación">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v11H3zM8 21h8M12 16v5"/><path d="M10 8.5v4l3.5-2z" fill="currentColor"/></svg>
+          <span>Presentar</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <p class="loading" id="loading">Cargando el manual…</p>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="footer-inner reveal">
+      <img id="footerLogo" src="media/logo-extracto-white.svg" alt="Extracto Importado" loading="lazy">
+      <p id="footerText"></p>
+      <div class="footer-meta">
+        <span id="footerVersion"></span>
+        <span id="footerLocation"></span>
+      </div>
+      <button id="editEntry" class="btn btn-outline footer-edit" type="button" hidden>
+        Editar contenido <span id="editBadge" class="edit-badge" hidden>Cambios locales</span>
+      </button>
+    </div>
+  </footer>
+
+  <div id="presenter" class="presenter" hidden>
+    <span class="presenter-info"><b id="presenterLabel"></b><span id="presenterCount"></span></span>
+    <button id="presenterPrev" class="icon-btn" type="button" aria-label="Anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button id="presenterNext" class="icon-btn" type="button" aria-label="Siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    <button id="presenterExit" class="btn btn-small btn-outline" type="button">Salir</button>
+  </div>
+
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Volver al inicio" title="Volver al inicio">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Visor de imágenes -->
+  <dialog id="lightbox" class="lightbox" aria-labelledby="lightboxTitle">
+    <div class="lightbox-top">
+      <img class="lightbox-logo" id="lightboxLogo" src="media/logo-extracto-white.svg" alt="Extracto Importado">
+      <span id="lightboxCount" class="lightbox-count" aria-live="polite"></span>
+      <button id="lightboxClose" class="icon-btn" type="button" aria-label="Cerrar visor">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="lightbox-body">
+      <button id="lightboxPrev" class="icon-btn lightbox-arrow prev" type="button" aria-label="Imagen anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <figure class="lightbox-figure">
+        <img id="lightboxImg" alt="">
+      </figure>
+      <button id="lightboxNext" class="icon-btn lightbox-arrow next" type="button" aria-label="Imagen siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="lightbox-caption">
+      <span id="lightboxCategory" class="tag"></span>
+      <h2 id="lightboxTitle"></h2>
+      <p id="lightboxText"></p>
+    </div>
+  </dialog>
+
+  <!-- Buscador -->
+  <dialog id="search" class="search" aria-labelledby="searchTitle">
+    <div class="search-top">
+      <h2 id="searchTitle" class="sr-only">Buscar en el manual</h2>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+      <input id="searchInput" type="search" placeholder="Buscar en el manual" aria-label="Buscar en el manual" autocomplete="off">
+      <button id="searchClose" class="icon-btn" type="button" aria-label="Cerrar buscador">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <ul id="searchResults" class="search-results"></ul>
+  </dialog>
+
+  <!-- Editor de contenido -->
+  <dialog id="editor" class="editor" aria-labelledby="editorTitle">
+    <div class="editor-top">
+      <div>
+        <small>Gestión de contenido</small>
+        <h2 id="editorTitle">Editar manual</h2>
+      </div>
+      <button id="closeEditor" class="icon-btn" type="button" aria-label="Cerrar editor">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="editor-tabs" role="tablist" aria-label="Áreas del editor">
+      <button type="button" role="tab" data-tab="general">Portada</button>
+      <button type="button" role="tab" data-tab="section">Secciones</button>
+      <button type="button" role="tab" data-tab="module">Bloques</button>
+      <button type="button" role="tab" data-tab="palette">Colores</button>
+      <button type="button" role="tab" data-tab="logos">Logos</button>
+    </div>
+    <div class="editor-scroll">
+      <div class="notice">
+        Los cambios se guardan solo en este navegador. Para publicarlos, exportá <code>data.json</code> y reemplazá el archivo en el repositorio de GitHub.
+      </div>
+      <div id="editorFields" role="tabpanel"></div>
+    </div>
+    <div class="editor-actions">
+      <button id="exportBtn" class="btn btn-primary" type="button">Exportar data.json</button>
+      <label class="btn btn-outline file-button">Importar JSON<input type="file" id="importFile" accept=".json,application/json"></label>
+      <button id="resetBtn" class="btn btn-ghost" type="button">Restaurar versión publicada</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js?v=2026-09-27-ex2" defer></script>
+</body>
+</html>
