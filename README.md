@@ -2,16 +2,9 @@
 
 Es una landing de una sola página que presenta la identidad, la voz y la forma de trabajo de **Extracto Importado**. Es un sitio estático (HTML, CSS y JavaScript) listo para GitHub Pages: no necesita backend ni claves de API.
 
-Usa el mismo motor que el manual de Crisger (contenido en `data.json`, editor local, modo presentación, generador de piezas, firma de correo y kit de descargas). A eso le suma las herramientas de la primera versión del manual de Extracto:
+Usa el mismo motor que el manual de Crisger: el contenido está en `data.json` y tiene editor local, modo presentación, editor de piezas, firma de correo y kit de descargas. Suma buscador, textos para copiar con filtros, glosario, descargas, plantillas de flyers y un generador de brief.
 
-- Catálogo con vista para anuncios pagos.
-- Así sí / así no.
-- Pilares de contenido.
-- Textos listos para copiar.
-- Canales copiables.
-- Generador de brief.
-- Checklist de lanzamiento.
-- Buscador.
+La estética es la de la marca: base blanca, títulos en mayúsculas espaciadas en Gotham Light y oro solo para acentos.
 
 ## Estructura
 
@@ -21,31 +14,51 @@ fonts/          Gotham (licencia comercial, ver más abajo)
 style.css       Diseño, colores de marca y responsive
 app.js          Render desde data.json, interacciones, herramientas y editor
 data.json       Todo el contenido editable del manual
-media/          Logos en SVG (5 versiones en color, blanco y monocromo), maquetas, imagen para compartir
-  descargas/    PNG en alta resolución, ZIP de logos, hoja membretada (Word y PDF) y manual en PDF
+media/          Logos en SVG, fotos de producto (fotos/), miniaturas de plantillas (plantillas/) e imagen para compartir
+  descargas/    PNG de logos, ZIP de logos, ZIP de fotos, hoja membretada (Word y PDF), manual en PDF y catálogo
 README.md
 ```
 
 ## Secciones
 
-1. **Portada**: título, texto introductorio y enlace para explorar.
-2. **Esencia**: qué es Extracto, conceptos (Precisión, Concentración y Cercanía), cifras que nos respaldan, públicos y objetivos del área.
-3. **Logo**: selector de versiones (principal, vertical, compacta, logotipo e isotipo) sobre fondo claro, oscuro u oro, con escala. Incluye el espacio de protección y nueve usos incorrectos.
-4. **Color**: paleta con HEX, RGB y CMYK copiables, proporción de uso, explorador de tonos y matices, y comparador de contraste.
-5. **Tipografía**: lettering del logo, pesos de Gotham, Gotham en textos y jerarquía de cinco niveles.
-6. **Voz y contenido**: principios, así sí / así no, vocabulario de la casa, pilares de contenido y textos listos para copiar.
-7. **Producto**: best sellers con el interruptor **Vista para anuncios pagos** (oculta la equivalencia), nomenclatura y presentaciones, canales copiables, envíos, pagos y Vende Extracto.
-8. **Aplicaciones**: dos tramas con el isotipo y galería de diez maquetas conceptuales con filtro por categoría y visor ampliado.
-9. **Equipo**: roles, pasos para pedir una pieza, plazos, reuniones fijas, **generador de brief** (chequea la fecha contra los plazos) y **checklist de lanzamiento** de T-30 a T+30.
-10. **Kit de marca**: logos en SVG y PNG, ZIP completo, paleta en CSS o texto para imprenta, pesos de Gotham, generador de piezas (publicación 1080 × 1350, cuadrado, historia y banner web 1440 × 360), firma de correo, hoja membretada y manual en PDF.
+El manual está ordenado como lo recorre alguien que se suma al equipo o empieza a revender: primero la marca y el producto, después cómo se ve y cómo habla, y al final las herramientas.
+
+1. **Marca**: qué es Extracto, conceptos, cifras, por qué nos eligen y públicos.
+2. **Productos**: líneas (Parfum, Body Mist, Discovery set), descripción de cada formato, nomenclatura por código, packaging, cómo usarlo y cuidarlo, y descargas del catálogo y las fotos.
+3. **Identidad**: logo con selector de versiones y fondos, espacio de protección, usos incorrectos, paleta, proporción de color, tonos, contraste, tipografía Gotham, jerarquía y tramas con el monograma.
+4. **Fotografía**: criterios para fotografiar el producto y galería con las 12 fotos oficiales, filtrable por categoría.
+5. **Voz**: principios, personalidad, cómo describir una fragancia, así sí / así no, palabras que usamos, familias olfativas, glosario con buscador y reglas de formato.
+6. **Textos**: 36 textos listos para copiar, con buscador y filtros por etapa de la venta y por canal (primer contacto, consultas, objeciones, cierre, posventa, revendedores, redes, estados de WhatsApp y perfiles). Lo que va entre [corchetes] se resalta para completar.
+7. **Ventas**: recorrido de la consulta a la posventa, canales copiables, envíos y pagos.
+8. **Revendedores**: cómo empezar, qué ofrecemos y buenas prácticas.
+9. **Pedidos**: plazos por tipo de pieza y un generador de brief completo. El brief chequea la fecha contra el plazo, avisa qué falta, se copia, se descarga en .txt o se envía por WhatsApp, y queda guardado como borrador en el navegador.
+10. **Kit de marca**: logos en SVG y PNG, paleta, tipografía, **14 plantillas de flyers**, editor de piezas, firma de correo, hoja membretada, fotos, catálogo y manual en PDF.
 
 El botón **Buscar** de la cabecera (o la tecla `/`) busca en todo el manual.
 
+## Plantillas de flyers
+
+Hay 14 plantillas listas: lanzamiento, best seller, promo por cantidad, fecha especial, Body Mist, banner web, envíos, cuotas sin interés, sumate a Vende Extracto, llegó stock, cultura olfativa, reseña de cliente, aviso y sorteo.
+
+- **Cómo se usan:** al tocar una plantilla se carga en el editor con su formato, estructura, color, textos y foto de fondo. Desde ahí se cambian los textos, la foto (subiendo una propia o eligiendo una de las oficiales) y el encuadre, y se descarga en PNG.
+- **Formatos:** publicación 1080 × 1350, cuadrado 1080 × 1080, historia 1080 × 1920 y banner web 1440 × 360.
+- **Estructuras:** Etiqueta (una tarjeta con marco fino, como la del frasco), Marco, Clásica, Centrada y Panel.
+- **Colores:** Blanco, Niebla y Negro. Los títulos van siempre en mayúsculas espaciadas, con un filete dorado.
+- **Miniaturas:** están en `media/plantillas/`. Si cambiás una plantilla en `app.js` (constante `TPL_PRESETS`), la miniatura vieja sigue ahí hasta que la reemplaces.
+
+## Catálogo
+
+El bloque de descargas de Productos y el kit apuntan a `media/descargas/extracto-catalogo.pdf`. Cuando subas el catálogo con ese nombre, el botón se activa solo; mientras no esté, muestra «Pendiente de carga».
+
 ## Logo
 
-El logo principal sale del archivo oficial que nos pasaron: se vectorizó en SVG en color, en blanco y en versión monocromática. El original en PNG está en `media/descargas/png/logo-extracto-original.png`.
+El logo principal sale del archivo oficial: se vectorizó en SVG en color, en blanco y en versión monocromática. El original en PNG está en `media/descargas/png/logo-extracto-original.png`.
 
-El **isotipo** (la E del logo dentro de una etiqueta, con un filete dorado) y las versiones **vertical** y **compacta** son una propuesta construida con la E del logo. Validalas con la diseñadora antes de producir. Para reemplazar cualquier versión, cambiá el archivo en `media/` (mismo nombre) o usá la pestaña **Logos** del editor.
+El **monograma** (una E espejada junto a una E) se reconstruyó a partir del que aparece en el Body Mist, con la E del logo. Las versiones **vertical** y **compacta** combinan el monograma con el logo. Validalas con la diseñadora antes de producir. Para reemplazar cualquier versión, cambiá el archivo en `media/` (mismo nombre) o usá la pestaña **Logos** del editor.
+
+## Fotos
+
+Las fotos para la web están en `media/fotos/` (WebP, 1600 px). Las versiones en alta para descargar están en `media/descargas/extracto-fotos-producto.zip`.
 
 ## Tipografía: Gotham
 
@@ -110,17 +123,16 @@ En **Bloques**, el campo **Lista** controla el contenido de las herramientas:
 | Tarjetas | `Título — Texto` |
 | Tabla | Columnas separadas con `|`. La primera línea es el encabezado. |
 | Catálogo con vista de pauta | Como la tabla. La 3.ª columna (equivalencia) se oculta en la vista para anuncios pagos. |
-| Así sí / así no | `Así sí || Así no` |
+| Así sí / así no | `Así sí || Así no`. Para cambiar los títulos, primera línea `# Somos || No somos` |
 | Vocabulario | Una palabra o expresión por línea |
-| Pilares de contenido | `Nombre | Porcentaje | Descripción` |
+| Glosario con buscador | `Término — Definición` |
+| Descargas | `Nombre | ruta del archivo | detalle` |
 | Canales copiables | `Canal | Dato para copiar | Nota` |
 | Pasos de un proceso | `Título — Texto` |
-| Textos para copiar | `Título — Texto` |
-| Checklist de lanzamiento | `T-30 | un mes antes | tarea; tarea; tarea` |
+| Textos para copiar | `Categoría | Título — Texto` |
 | Usos incorrectos | Un ejemplo por línea. Reconoce: color, contorno, forma, volumen, sombra, reflejar, comprimir, expandir y rotar. |
 | Jerarquía tipográfica | `Referencia — Texto de ejemplo` |
 
-El generador de brief toma los pilares del bloque **Pilares de contenido**.
 
 ### Cómo se guardan los cambios
 
@@ -128,7 +140,7 @@ El generador de brief toma los pilares del bloque **Pilares de contenido**.
 - **Exportar data.json** descarga el contenido actual.
 - **Importar JSON** carga un archivo guardado antes.
 - **Restaurar versión publicada** borra los cambios locales.
-- Las tildes del checklist y la firma de correo también quedan guardadas en el navegador de cada persona.
+- El borrador del brief y la firma de correo también quedan guardados en el navegador de cada persona.
 
 ### Publicar una actualización
 
@@ -179,13 +191,12 @@ Al compartir el enlace aparece una tarjeta con `media/og-extracto.jpg`. Para má
 ## Criterios de marca
 
 - **Colores:**
-  - Oro `#C89210` (el de los filetes del logo).
-  - Negro `#050505`.
-  - Grafito `#3A3A38`.
-  - Gris piedra `#C9C7C2`.
+  - Blanco `#FFFFFF`: la base.
   - Blanco niebla `#F4F3F0`.
-  - Blanco `#FFFFFF`.
-- **Tipografía:** Gotham Light para titulares, Gotham Book para textos y Gotham Medium para etiquetas, botones y códigos.
+  - Gris piedra `#C9C7C2`.
+  - Grafito `#3A3A38`.
+  - Negro `#050505`.
+  - Oro `#C89210`: solo para acentos, como filetes, etiquetas y detalles, nunca de fondo.
+- **Tipografía:** Gotham. Light en mayúsculas espaciadas para títulos, Book para textos y Medium para etiquetas y botones.
 - **Pauta:** en anuncios pagos no se nombran marcas originales; se comunica por código y notas.
-- **Maquetas:** las diez aplicaciones son maquetas conceptuales, no fotografías de productos reales.
-- **Borrador:** las decisiones de operación (roles, plazos, reuniones) son una propuesta pendiente de aprobación.
+- **Propuestas a validar:** los plazos de reel, campaña y producción de fotos, y las decisiones de operación.

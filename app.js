@@ -3,7 +3,7 @@
    Aplicación estática: lee data.json, renderiza la landing y ofrece un editor local (localStorage). */
 'use strict';
 
-const STORAGE_KEY = 'extracto-manual-v1';
+const STORAGE_KEY = 'extracto-manual-v2';
 const $ = (s, root = document) => root.querySelector(s);
 const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 const clone = x => JSON.parse(JSON.stringify(x));
@@ -48,7 +48,7 @@ let data = null;
 const ui = {
   logoVariant: 'principal', logoBg: 'claro', logoScale: 70,
   clearVariant: 'principal', toneIndex: 0, toneAmount: 35,
-  contrastMode: 'dark', filter: 'Todas', patternIndex: 0, revealAll: false
+  contrastMode: 'white', filter: 'Todas', patternIndex: 0, revealAll: false
 };
 const editorState = { tab: 'general', si: 0, mi: 0 };
 let galleryEntries = [];
@@ -59,7 +59,7 @@ let revealObserver = null;
 let liveObserver = null;
 
 const LOGO_VARIANTS = [['principal', 'Principal'], ['vertical', 'Vertical'], ['compacto', 'Compacta'], ['logotipo', 'Logotipo'], ['isotipo', 'Isotipo']];
-const LOGO_BGS = [['claro', 'Claro'], ['oscuro', 'Oscuro'], ['ambar', 'Oro']];
+const LOGO_BGS = [['claro', 'Blanco'], ['niebla', 'Niebla'], ['oscuro', 'Negro']];
 const DEFAULT_LOGO = 'media/logo-extracto.svg';
 const KINDS = [
   ['standard', 'Texto e imagen'], ['essence', 'Historia y conceptos'], ['feature', 'Maqueta destacada'],
@@ -69,9 +69,10 @@ const KINDS = [
   ['type-display', 'Pesos de Gotham'], ['type-body', 'Gotham en textos'], ['type-scale', 'Jerarquía tipográfica'],
   ['stats', 'Cifras destacadas'], ['cards', 'Tarjetas'], ['table', 'Tabla'], ['catalog', 'Catálogo con vista de pauta'],
   ['tone', 'Así sí / así no'], ['lexicon', 'Vocabulario'], ['pillars', 'Pilares de contenido'], ['contacts', 'Canales copiables'],
-  ['flow', 'Pasos de un proceso'], ['snippets', 'Textos para copiar'], ['brief', 'Generador de brief'], ['checklist', 'Checklist de lanzamiento']
+  ['flow', 'Pasos de un proceso'], ['snippets', 'Textos para copiar'], ['brief', 'Generador de brief'], ['checklist', 'Checklist de lanzamiento'],
+  ['glossary', 'Glosario con buscador'], ['download', 'Descargas']
 ];
-const NEW_KINDS = ['stats', 'cards', 'table', 'catalog', 'tone', 'lexicon', 'pillars', 'contacts', 'flow', 'snippets', 'brief', 'checklist'];
+const NEW_KINDS = ['stats', 'cards', 'table', 'catalog', 'tone', 'lexicon', 'pillars', 'contacts', 'flow', 'snippets', 'brief', 'checklist', 'glossary', 'download'];
 const GENERATED = new Set(['logo', 'clearspace', 'incorrect', 'patterns', 'palette', 'tints', 'contrast', 'type-logo', 'type-display', 'type-scale', ...NEW_KINDS]);
 const WIDE = new Set(['incorrect', 'patterns', 'palette', 'tints', 'contrast', 'type-display', 'type-scale', ...NEW_KINDS.filter(k => k !== 'lexicon')]);
 const ITEMS_INTERNAL = new Set(['incorrect', 'patterns', 'contrast', 'type-scale', 'essence', ...NEW_KINDS]);
@@ -219,7 +220,7 @@ function normalize(x) {
   d.drive = { folder: '', apiKey: '', ...(d.drive || {}) };
   d.logos ||= {};
   for (const [v] of LOGO_VARIANTS) { d.logos[v] ||= {}; for (const [b] of LOGO_BGS) d.logos[v][b] ||= ''; }
-  d.palette = d.palette.filter(c => c && typeof c === 'object').map(c => ({ name: c.name || 'Color', hex: isHex(c.hex) ? c.hex.toUpperCase() : '#888888', rgb: c.rgb || '', cmyk: c.cmyk || '' }));
+  d.palette = d.palette.filter(c => c && typeof c === 'object').map(c => ({ name: c.name || 'Color', hex: isHex(c.hex) ? c.hex.toUpperCase() : '#888888', rgb: c.rgb || '', cmyk: c.cmyk || '', ...(c.accent ? { accent: true } : {}) }));
   d.sections.forEach((s, i) => {
     s.id = safeId(s.id || `seccion-${i + 1}`);
     s.kicker ??= ''; s.lead ??= ''; s.note ??= ''; s.navLabel ||= s.title;
@@ -239,11 +240,13 @@ function normalize(x) {
 /* ---------- Render principal ---------- */
 function render() {
   const scrollY = window.scrollY;
-  const orange = isHex(data.palette[0]?.hex) ? data.palette[0].hex : '#C89210';
+  const accentColor = data.palette.find(c => c.accent) || data.palette.find(c => /oro/i.test(c.name)) || data.palette[0];
+  const orange = isHex(accentColor?.hex) ? accentColor.hex : '#C89210';
   document.documentElement.style.setProperty('--orange', orange);
   document.documentElement.style.setProperty('--accent-rgb', hexToRgb(orange).join(', '));
   document.title = `${data.brand} · ${data.heroLabel}`;
-  for (const id of ['#navLogo', '#footerLogo', '#lightboxLogo']) { $(id).src = logoAsset('principal', 'oscuro'); $(id).alt = data.brand; }
+  for (const id of ['#navLogo', '#footerLogo']) { $(id).src = logoAsset('principal', 'claro'); $(id).alt = data.brand; }
+  $('#lightboxLogo').src = logoAsset('principal', 'oscuro'); $('#lightboxLogo').alt = data.brand;
   $('#navLabel').textContent = data.heroLabel;
   $('#navVersion').textContent = data.version;
   const footerText = $('#footerText'); footerText.replaceChildren(); splitWords(footerText, data.footerText);
@@ -251,7 +254,7 @@ function render() {
   $('#footerLocation').textContent = [data.descriptor, data.location].filter(Boolean).join(' · ');
 
   const list = $('#navList');
-  list.replaceChildren(...data.sections.map(s => h('li', {}, h('a', { href: `#${s.id}`, text: s.navLabel || s.title }))), h('li', { class: 'nav-indicator', 'aria-hidden': 'true' }));
+  list.replaceChildren(...data.sections.map(s => h('li', {}, h('a', { href: `#${s.id}`, text: s.navLabel || s.title }))), h('li', {}, h('a', { href: '#kit', text: data.kit.navLabel || 'Kit' })), h('li', { class: 'nav-indicator', 'aria-hidden': 'true' }));
   activeId = null;
 
   const main = $('#main');
@@ -270,7 +273,8 @@ function renderHero() {
   const words = String(data.heroTitle || '').trim().split(/\s+/);
   const last = words.pop() || '';
   const firstSection = data.sections[0]?.id || 'main';
-  return h('section', { class: 'hero', id: 'inicio', 'aria-labelledby': 'heroTitle' }, [
+  return h('section', { class: `hero${data.heroImage ? ' has-photo' : ''}`, id: 'inicio', 'aria-labelledby': 'heroTitle' }, [
+    data.heroImage ? h('figure', { class: 'hero-photo' }, h('img', { src: data.heroImage, alt: 'Frasco de Extracto Importado', fetchpriority: 'high' })) : null,
     h('div', { class: 'hero-inner' }, [
       h('p', { class: 'hero-label' }, [h('span', { text: data.heroLabel }), h('span', { class: 'dot', 'aria-hidden': 'true' }), h('span', { text: `Versión ${data.version}` })]),
       splitWords(h('h1', { id: 'heroTitle' }), [...words, last].join(' '), { emLast: true }),
@@ -322,7 +326,8 @@ function renderModule(s, m, i) {
     palette: renderPalette, tints: renderToneLab, contrast: renderContrast, 'type-logo': renderTypeLogo,
     'type-display': renderTypeDisplay, 'type-body': renderTypeBody, 'type-scale': renderTypeScale, essence: renderImage,
     stats: renderStats, cards: renderCards, table: renderTable, catalog: renderCatalog, tone: renderTone, lexicon: renderLexicon,
-    pillars: renderPillars, contacts: renderContacts, flow: renderFlow, snippets: renderSnippets, brief: renderBrief, checklist: renderChecklist
+    pillars: renderPillars, contacts: renderContacts, flow: renderFlow, snippets: renderSnippets, brief: renderBrief, checklist: renderChecklist,
+    glossary: renderGlossary, download: renderDownload
   };
   (renderers[m.kind] || renderImage)(visual, m);
   if (!visual.childNodes.length) visual.classList.add('is-empty');
@@ -337,12 +342,12 @@ function renderModule(s, m, i) {
 
 function renderImage(host, m) {
   if (!m.media) return;
-  const isMockup = /mockup-/.test(m.media) || m.kind === 'essence';
+  const isMockup = /mockup-/.test(m.media);
   const btn = h('button', { class: 'media-button', type: 'button', 'aria-label': `Ampliar imagen: ${m.title}`, onclick: e => openLightbox([m], 0, e.currentTarget) }, [
-    h('img', { src: m.media, alt: isMockup ? `Maqueta conceptual: ${m.title}` : `Ejemplo visual: ${m.title}`, loading: 'lazy', decoding: 'async' }),
+    h('img', { src: m.media, alt: isMockup ? `Maqueta conceptual: ${m.title}` : `Foto: ${m.title}`, loading: 'lazy', decoding: 'async' }),
     h('span', { class: 'media-zoom' }, icon(ICONS.expand))
   ]);
-  host.append(h('figure', { class: 'media-figure' }, [btn, h('figcaption', { text: isMockup ? 'Maqueta conceptual · ampliar' : `Ejemplo de uso · ${m.title}` })]));
+  host.append(h('figure', { class: 'media-figure' }, [btn, h('figcaption', { text: isMockup ? 'Maqueta conceptual · ampliar' : `${m.title} · ampliar` })]));
 }
 
 function renderFeature(m) {
@@ -449,7 +454,7 @@ function renderIncorrect(host, m) {
 
 /* ---------- Recursos: patrones ---------- */
 function buildPattern(i) {
-  const iso = logoAsset('isotipo', i === 0 ? 'oscuro' : 'ambar');
+  const iso = logoAsset('isotipo', 'claro');
   const stage = h('div', { class: `pattern-stage pattern-${i}`, 'aria-hidden': 'true' });
   if (i === 0) {
     for (let n = 0; n < 12 * 10; n++) stage.append(h('img', { src: iso, alt: '', style: { '--d': `${(((n % 12) + Math.floor(n / 12)) * 0.16).toFixed(2)}s` } }));
@@ -463,7 +468,7 @@ function buildPattern(i) {
   return stage;
 }
 function renderPatterns(host, m) {
-  const labels = m.items.length ? m.items : ['Trama de etiquetas', 'Ritmo alternado'];
+  const labels = m.items.length ? m.items : ['Trama de monogramas', 'Ritmo alternado'];
   const total = labels.length;
   const track = h('div', { class: 'pattern-track', tabindex: '0', role: 'region', 'aria-roledescription': 'carrusel', 'aria-label': 'Patrones con el isotipo. Usá las flechas para recorrerlos.' });
   const cards = labels.map((label, i) => h('figure', { class: 'pattern-card', 'aria-roledescription': 'diapositiva', 'aria-label': `${i + 1} de ${total}: ${label}` }, [
@@ -516,15 +521,6 @@ function renderPalette(host) {
       ])
     ]));
   });
-  const orange = brandColor('#C89210', 0), black = brandColor('#000000', 1);
-  [['Resplandor dorado', `linear-gradient(135deg, ${orange} 0%, ${black} 100%)`, `${orange} → ${black}`],
-   ['Degradado profundo', `linear-gradient(90deg, ${black} 0%, ${black} 20%, ${orange} 100%)`, `${black} → ${orange}`]].forEach(([name, bg, codes], i) => {
-    grid.append(h('button', { type: 'button', class: `palette-tile gradient-tile g-${i}`, style: { background: bg, color: '#FFFFFF' },
-      'aria-label': `Copiar CSS del ${name.toLowerCase()}`, onclick: e => copyText(bg, 'Degradado', e.currentTarget) }, [
-      h('span', { class: 'tile-top' }, [h('strong', { text: name }), h('span', { class: 'tile-copy' }, [icon(ICONS.copy), 'Copiar CSS'])]),
-      h('span', { class: 'tile-codes' }, [h('b', { class: 'tile-hex', text: i ? 'Negro → oro' : 'Oro → negro' }), h('span', { text: codes })])
-    ]));
-  });
   host.append(grid);
 }
 
@@ -571,13 +567,13 @@ function renderToneLab(host) {
 
 function renderContrast(host, m) {
   const [kicker = 'Perfumes de equivalencia', title = 'La precisión de un original.', body = 'Extractos de alta concentración.', accent = 'Envíos a todo el país'] = m.items;
-  const P = { orange: brandColor('#C89210', 0), black: brandColor('#000000', 1), graphite: brandColor('#3A3A38', 2), gray: brandColor('#C9C7C2', 3), warm: brandColor('#F4F3F0', 4), white: brandColor('#FFFFFF', 5) };
+  const P = { orange: brandColor('#C89210', 5), black: brandColor('#050505', 4), graphite: brandColor('#3A3A38', 3), gray: brandColor('#C9C7C2', 2), warm: brandColor('#F4F3F0', 1), white: brandColor('#FFFFFF', 0) };
   const modes = {
-    light: { label: 'Claro', bg: P.warm, title: P.black, text: P.graphite, accent: P.orange, accentInk: P.black, ref: P.warm },
-    dark: { label: 'Oscuro', bg: P.black, title: P.white, text: P.gray, accent: P.orange, accentInk: P.black, ref: P.black },
-    orange: { label: 'Oro', bg: P.orange, title: P.black, text: P.black, accent: P.black, accentInk: P.white, ref: P.orange },
-    gradient: { label: 'Degradado', bg: `linear-gradient(100deg, ${P.black} 0%, ${P.black} 34%, ${P.orange} 100%)`, title: P.white, text: P.warm, accent: P.orange, accentInk: P.black, ref: P.black }
+    white: { label: 'Blanco', bg: P.white, title: P.black, text: P.graphite, accent: '#8A6408', accentInk: P.white, ref: P.white },
+    light: { label: 'Niebla', bg: P.warm, title: P.black, text: P.graphite, accent: '#8A6408', accentInk: P.white, ref: P.warm },
+    dark: { label: 'Negro', bg: P.black, title: P.white, text: P.gray, accent: P.orange, accentInk: P.black, ref: P.black }
   };
+  if (!modes[ui.contrastMode]) ui.contrastMode = 'white';
   const tabs = h('div', { class: 'segmented', role: 'group', 'aria-label': 'Fondo de la aplicación' });
   const stage = h('div', { class: 'contrast-stage' });
   const legend = h('ul', { class: 'contrast-legend' });
@@ -696,11 +692,17 @@ function renderCatalog(host, m) {
   host.append(wrap); sync();
 }
 function renderTone(host, m) {
-  host.append(h('div', { class: 'tone-list stagger' }, m.items.map(line => {
+  let [okLabel, noLabel] = ['Así sí', 'Así no'];
+  const rows = m.items.filter(line => {
+    if (!String(line).startsWith('#')) return true;
+    [okLabel, noLabel] = String(line).slice(1).split('||').map(x => x.trim());
+    return false;
+  });
+  host.append(h('div', { class: 'tone-list stagger' }, rows.map(line => {
     const [ok, no = ''] = String(line).split('||').map(x => x.trim());
     return h('div', { class: 'tone-row' }, [
-      h('div', { class: 'tone-ok' }, [h('span', { class: 'tone-tag', text: 'Así sí' }), h('p', { text: ok })]),
-      h('div', { class: 'tone-no' }, [h('span', { class: 'tone-tag', text: 'Así no' }), h('p', { text: no })])
+      h('div', { class: 'tone-ok' }, [h('span', { class: 'tone-tag', text: okLabel }), h('p', { text: ok })]),
+      h('div', { class: 'tone-no' }, [h('span', { class: 'tone-tag', text: noLabel }), h('p', { text: no })])
     ]);
   })));
 }
@@ -710,15 +712,11 @@ function renderLexicon(host, m) {
 function renderPillars(host, m) {
   const rows = m.items.map(splitBar).map(([name, pct = '0', desc = '']) => ({ name, pct: Number(String(pct).replace(/[^\d.]/g, '')) || 0, desc }));
   const max = Math.max(1, ...rows.map(r => r.pct));
-  const total = rows.reduce((a, r) => a + r.pct, 0);
-  host.append(h('div', { class: 'pillars stagger' }, [
-    ...rows.map(r => h('div', { class: 'pillar' }, [
-      h('div', { class: 'pillar-name' }, [h('strong', { text: r.name }), r.desc ? h('span', { text: r.desc }) : null]),
-      h('div', { class: 'pillar-bar', role: 'img', 'aria-label': `${r.name}: ${r.pct}%` }, h('i', { style: { width: `${(r.pct / max) * 100}%` } })),
-      h('b', { class: 'pillar-pct', text: `${r.pct}%` })
-    ])),
-    h('p', { class: 'pillar-foot', text: `Total ${total}% · las barras se comparan contra el pilar más grande.` })
-  ]));
+  host.append(h('div', { class: 'pillars stagger' }, rows.map(r => h('div', { class: 'pillar' }, [
+    h('div', { class: 'pillar-name' }, [h('strong', { text: r.name }), r.desc ? h('span', { text: r.desc }) : null]),
+    h('div', { class: 'pillar-bar', role: 'img', 'aria-label': `${r.name}: ${r.pct}%` }, h('i', { style: { width: `${(r.pct / max) * 100}%` } })),
+    h('b', { class: 'pillar-pct', text: `${r.pct}%` })
+  ]))));
 }
 function renderContacts(host, m) {
   host.append(h('div', { class: 'contact-grid stagger' }, m.items.map(line => {
@@ -732,71 +730,245 @@ function renderContacts(host, m) {
 function renderFlow(host, m) {
   host.append(h('ol', { class: 'flow stagger' }, m.items.map((line, i) => {
     const [title, text = ''] = splitDash(line);
-    return h('li', {}, [h('span', { class: 'flow-n', text: `Paso ${i + 1}` }), h('strong', { text: title }), text ? h('p', { text }) : null]);
-  })));
-}
-function renderSnippets(host, m) {
-  host.append(h('div', { class: 'snippet-grid stagger' }, m.items.map(line => {
-    const [title, text = ''] = splitDash(line);
-    return h('article', { class: 'snippet' }, [
-      h('header', {}, [h('strong', { text: title }), h('button', { type: 'button', class: 'btn btn-small btn-outline', onclick: e => copyText(text, 'Texto', e.currentTarget) }, [icon(ICONS.copy), 'Copiar'])]),
-      h('p', { text })
-    ]);
+    return h('li', {}, [h('span', { class: 'flow-n', text: pad2(i + 1) }), h('strong', { text: title }), text ? h('p', { text }) : null]);
   })));
 }
 
-/* Generador de brief: arma el pedido y chequea la fecha contra los plazos del área */
-const brief = { pieza: 'Carrusel guía de regalo Día de la Madre', tipo: 'std', formato: 'Carrusel 1080 × 1350', pilar: '', fecha: '', codigos: 'N100, N36, N194',
-  objetivo: 'Que elijan un perfume de regalo según cómo es su mamá y lleven dos con la promo.',
-  textos: 'Tapa: ¿Cómo es tu mamá?\nN100, la dulce · N36, la intensa · N194, la luminosa\nCierre: Uno para ella, uno para vos.',
-  referencias: 'Fondo claro, frascos con sombra suave. Sin nombres de marcas originales.' };
-const BRIEF_TIPOS = [['std', 'Pieza nueva · 3 días hábiles', 3], ['tpl', 'Adaptación de plantilla · 24 h', 1], ['urg', 'Urgencia · usa cupo', 0]];
-const BRIEF_FORMATOS = ['Publicación 1080 × 1350', 'Carrusel 1080 × 1350', 'Historia o reel 1080 × 1920', 'Anuncio Meta', 'Banner web 1440 × 360', 'Pieza para revendedores'];
+/* Textos para copiar: «Categoría | Título — Texto», con filtro por categoría y búsqueda */
+const snipUI = {};
+function renderSnippets(host, m) {
+  const entries = m.items.map(line => {
+    const raw = String(line);
+    const hasCat = raw.includes('|') && raw.indexOf('|') < raw.indexOf(' — ');
+    const [cat, rest] = hasCat ? [raw.slice(0, raw.indexOf('|')).trim(), raw.slice(raw.indexOf('|') + 1).trim()] : ['Textos', raw];
+    const [title, text = ''] = splitDash(rest);
+    return { cat, title, text };
+  });
+  const cats = ['Todos', ...new Set(entries.map(e => e.cat))];
+  const state = snipUI[m.id] ||= { cat: 'Todos', q: '' };
+  if (!cats.includes(state.cat)) state.cat = 'Todos';
+  const filters = h('div', { class: 'gallery-filters snip-filters', role: 'group', 'aria-label': 'Filtrar textos por situación' });
+  const search = h('input', { type: 'search', class: 'snip-search', id: `snip-q-${safeId(m.id)}`, placeholder: 'Buscar un texto: envío, precio, regalo…', 'aria-label': 'Buscar un texto' });
+  search.value = state.q;
+  const grid = h('div', { class: 'snippet-grid' });
+  const count = h('p', { class: 'snip-count', 'aria-live': 'polite' });
+  const card = e => h('article', { class: 'snippet' }, [
+    h('header', {}, [h('div', {}, [h('span', { class: 'snip-cat', text: e.cat }), h('strong', { text: e.title })]),
+      h('button', { type: 'button', class: 'btn btn-small btn-outline', onclick: ev => copyText(e.text, 'Texto', ev.currentTarget) }, [icon(ICONS.copy), 'Copiar'])]),
+    h('p', {}, e.text.split(/(\[[^\]]+\])/).map(part => (/^\[.+\]$/.test(part) ? h('mark', { text: part }) : part)))
+  ]);
+  const draw = () => {
+    const q = fold(state.q.trim());
+    const list = entries.filter(e => (state.cat === 'Todos' || e.cat === state.cat) && (!q || fold(`${e.title} ${e.text} ${e.cat}`).includes(q)));
+    $$('button', filters).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cat === state.cat)));
+    grid.replaceChildren(...(list.length ? list.map(card) : [h('p', { class: 'snip-empty', text: 'No hay textos para esa búsqueda.' })]));
+    count.textContent = `${list.length} ${list.length === 1 ? 'texto' : 'textos'}`;
+  };
+  cats.forEach(c => {
+    const n = c === 'Todos' ? entries.length : entries.filter(e => e.cat === c).length;
+    filters.append(h('button', { type: 'button', 'data-cat': c, onclick: () => { state.cat = c; draw(); } }, [c, h('span', { class: 'count', text: n })]));
+  });
+  search.addEventListener('input', () => { state.q = search.value; draw(); });
+  host.append(h('div', { class: 'snippets' }, [h('div', { class: 'snip-bar' }, [search, count]), filters, grid]));
+  draw();
+}
+
+/* Glosario con buscador */
+function renderGlossary(host, m) {
+  const entries = m.items.map(line => { const [term, def = ''] = splitDash(line); return { term, def }; });
+  const input = h('input', { type: 'search', class: 'snip-search', id: `glos-${safeId(m.id)}`, placeholder: 'Buscar un término', 'aria-label': 'Buscar un término del glosario' });
+  const list = h('dl', { class: 'glossary' });
+  const draw = () => {
+    const q = fold(input.value.trim());
+    const rows = entries.filter(e => !q || fold(`${e.term} ${e.def}`).includes(q));
+    list.replaceChildren(...(rows.length ? rows.flatMap(e => [h('div', { class: 'gl-row' }, [h('dt', { text: e.term }), h('dd', { text: e.def })])]) : [h('p', { class: 'snip-empty', text: 'No está en el glosario. Probá con otra palabra.' })]));
+  };
+  input.addEventListener('input', draw);
+  host.append(h('div', { class: 'glossary-wrap' }, [input, list]));
+  draw();
+}
+
+/* Descargas: «Etiqueta | ruta | detalle». Si el archivo todavía no está en el sitio, lo avisa. */
+function renderDownload(host, m) {
+  host.append(h('div', { class: 'download-grid stagger' }, m.items.map(line => {
+    const [label, href = '', detail = ''] = splitBar(line);
+    const btn = h('a', { class: 'btn btn-primary', href, download: fileName(href) }, [icon(ICONS.download), 'Descargar']);
+    const state = h('span', { class: 'download-state' });
+    const card = h('article', { class: 'download-card' }, [
+      h('div', {}, [h('strong', { text: label }), detail ? h('p', { text: detail }) : null, state]),
+      btn
+    ]);
+    if (href && location.protocol !== 'file:') {
+      fetch(href, { method: 'HEAD', cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(r.status); }).catch(() => {
+        card.classList.add('is-pending'); btn.removeAttribute('href'); btn.setAttribute('aria-disabled', 'true');
+        btn.replaceChildren('Pendiente de carga'); state.textContent = `Subí el archivo a ${href} para activar la descarga.`;
+      });
+    }
+    return card;
+  })));
+}
+
+/* Generador de brief: arma el pedido, sugiere la fecha según el plazo y guarda un borrador */
+const BRIEF_KEY = 'extracto-brief-v2';
+const BRIEF_TIPOS = [
+  ['tpl', 'Adaptación de plantilla', 1], ['std', 'Pieza nueva', 3], ['reel', 'Reel o video', 5],
+  ['camp', 'Campaña completa', 10], ['foto', 'Producción de fotos', 15], ['urg', 'Urgencia (usa cupo)', 0]
+];
+const BRIEF_PIEZAS = ['Publicación', 'Carrusel', 'Historia', 'Reel', 'Flyer', 'Anuncio pago', 'Banner web', 'Pieza para revendedores', 'Catálogo o lista de precios', 'Packaging o etiqueta', 'Impreso', 'Otra'];
+const BRIEF_CANALES = ['Instagram', 'Historias', 'TikTok', 'WhatsApp', 'Web', 'Meta Ads', 'Revendedores', 'Impreso'];
+const BRIEF_FORMATOS = ['1080 × 1350 (4:5)', '1080 × 1080 (1:1)', '1080 × 1920 (9:16)', '1440 × 360 (banner)', 'A4', 'Otro'];
+const BRIEF_OBJETIVOS = ['Vender un producto', 'Lanzar una fragancia', 'Comunicar una promo', 'Informar (envíos, horarios, pagos)', 'Captar revendedores', 'Fidelizar clientes', 'Contenido de marca', 'Otro'];
+const BRIEF_CTAS = ['Sin botón', 'Comprá online', 'Escribinos por WhatsApp', 'Pedilo por mensaje', 'Ver más', 'Sumate a Vende Extracto', 'Participá', 'Otro'];
+const BRIEF_MATERIALES = ['Fotos de producto', 'Logo', 'Textos aprobados', 'Precios vigentes', 'Video grabado', 'Referencias visuales'];
+const BRIEF_DEFAULT = {
+  solicitante: '', area: 'Marketing', tipo: 'std', pieza: 'Carrusel', titulo: 'Guía de regalo Día de la Madre', canales: ['Instagram', 'Historias'], formatos: ['1080 × 1350 (4:5)'],
+  publico: 'Cliente final', objetivo: 'Comunicar una promo', detalle: 'Que elijan un perfume de regalo según cómo es su mamá y lleven dos con la promo.',
+  codigos: 'N100, N36, N194', mensaje: 'Hay aromas que tienen nombre.', textos: 'Tapa: ¿Cómo es tu mamá?\nN100, la dulce · N36, la intensa · N194, la luminosa\nCierre: Uno para ella, uno para vos.',
+  cta: 'Escribinos por WhatsApp', publicacion: '', entrega: '', prioridad: 'Normal', materiales: ['Fotos de producto', 'Logo'], referencias: 'Estética de fondo blanco, como las fotos oficiales. Sin nombres de marcas originales.', aprueba: 'Matías'
+};
+let brief = null;
+function loadBrief() {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(BRIEF_KEY) || 'null'); } catch { /* sin acceso */ }
+  brief = { ...clone(BRIEF_DEFAULT), ...(saved || {}) };
+}
+function saveBrief() { try { localStorage.setItem(BRIEF_KEY, JSON.stringify(brief)); } catch { /* sin acceso */ } }
 function addBusinessDays(d, n) { const r = new Date(d); let a = 0; while (a < n) { r.setDate(r.getDate() + 1); const w = r.getDay(); if (w !== 0 && w !== 6) a++; } return r; }
+function subBusinessDays(d, n) { const r = new Date(d); let a = 0; while (a < n) { r.setDate(r.getDate() - 1); const w = r.getDay(); if (w !== 0 && w !== 6) a++; } return r; }
 const isoDate = d => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
 const fmtDate = s => { if (!s) return 'sin definir'; const [y, mo, d] = s.split('-'); return `${d}/${mo}/${y}`; };
+function briefText() {
+  const b = brief, tipo = BRIEF_TIPOS.find(t => t[0] === b.tipo) || BRIEF_TIPOS[1];
+  const list = a => (a && a.length ? a.join(', ') : '—');
+  return [
+    `BRIEF · ${b.pieza.toUpperCase()} · ${b.titulo || 'Sin título'}`,
+    `Pide: ${b.solicitante || '—'}${b.area ? ` (${b.area})` : ''}`,
+    `Tipo de pedido: ${tipo[1]}${tipo[2] ? ` · ${tipo[2] === 1 ? '24 h' : `${tipo[2]} días hábiles`}` : ''}`,
+    `Prioridad: ${b.prioridad}`,
+    '',
+    'DÓNDE SE PUBLICA',
+    `Canales: ${list(b.canales)}`,
+    `Formatos: ${list(b.formatos)}`,
+    `Público: ${b.publico}`,
+    '',
+    'PARA QUÉ',
+    `Objetivo: ${b.objetivo}`,
+    b.detalle || '—',
+    '',
+    'CONTENIDO',
+    `Productos o códigos: ${b.codigos || '—'}`,
+    `Mensaje principal: ${b.mensaje || '—'}`,
+    'Textos:',
+    b.textos || '—',
+    `Botón o llamado a la acción: ${b.cta}`,
+    '',
+    'FECHAS',
+    `Publicación: ${fmtDate(b.publicacion)}`,
+    `Entrega de diseño: ${fmtDate(b.entrega)}`,
+    '',
+    `Materiales disponibles: ${list(b.materiales)}`,
+    `Referencias: ${b.referencias || '—'}`,
+    `Aprueba: ${b.aprueba || '—'}`,
+    '',
+    'Recordatorio: en anuncios pagos, solo código y notas. Sin nombres de marcas originales.'
+  ].join('\n');
+}
 function renderBrief(host) {
-  const pillarModule = data.sections.flatMap(s => s.modules).find(x => x.kind === 'pillars');
-  const pilares = pillarModule ? pillarModule.items.map(l => splitBar(l)[0]) : ['General'];
-  if (!pilares.includes(brief.pilar)) brief.pilar = pilares[0];
+  if (!brief) loadBrief();
   const today = new Date(); today.setHours(12, 0, 0, 0);
-  if (!brief.fecha) brief.fecha = isoDate(addBusinessDays(today, 4));
+  const minFor = () => addBusinessDays(today, (BRIEF_TIPOS.find(t => t[0] === brief.tipo) || BRIEF_TIPOS[1])[2]);
+  if (!brief.entrega) brief.entrega = isoDate(minFor());
+  if (!brief.publicacion) brief.publicacion = isoDate(addBusinessDays(new Date(`${brief.entrega}T12:00:00`), 1));
   const out = h('pre', { class: 'brief-out' });
   const status = h('p', { class: 'brief-status', role: 'status' });
+  const missing = h('ul', { class: 'brief-missing' });
   const draw = () => {
-    const tipo = BRIEF_TIPOS.find(t => t[0] === brief.tipo) || BRIEF_TIPOS[0];
-    const due = new Date(`${brief.fecha}T12:00:00`), min = addBusinessDays(today, tipo[2]);
-    if (!brief.fecha) { status.className = 'brief-status'; status.textContent = ''; }
+    const tipo = BRIEF_TIPOS.find(t => t[0] === brief.tipo) || BRIEF_TIPOS[1];
+    const due = new Date(`${brief.entrega}T12:00:00`), min = minFor(), pub = new Date(`${brief.publicacion}T12:00:00`);
+    if (!brief.entrega) { status.className = 'brief-status'; status.textContent = 'Elegí una fecha de entrega.'; }
     else if (tipo[0] === 'urg') { status.className = 'brief-status is-warn'; status.textContent = 'Urgencia: descuenta 1 del cupo de 2 por semana y necesita el visto de Matías.'; }
-    else if (due < min) { status.className = 'brief-status is-bad'; status.textContent = `La fecha no llega al plazo. Lo más temprano posible es el ${fmtDate(isoDate(min))}, o pedilo como urgencia.`; }
-    else { status.className = 'brief-status is-ok'; status.textContent = 'La fecha entra en el plazo.'; }
-    out.textContent = `BRIEF · ${brief.pieza || 'Sin nombre'}\nTipo: ${tipo[1]}\nFormato: ${brief.formato}\nPilar: ${brief.pilar}\nEntrega: ${fmtDate(brief.fecha)}\nCódigos: ${brief.codigos || '—'}\n\nOBJETIVO\n${brief.objetivo || '—'}\n\nTEXTOS\n${brief.textos || '—'}\n\nREFERENCIAS\n${brief.referencias || '—'}\n\nRecordatorio: en anuncios pagos, solo código y notas.`;
+    else if (due < min) { status.className = 'brief-status is-bad'; status.textContent = `No llega al plazo de «${tipo[1]}». Lo más temprano posible es el ${fmtDate(isoDate(min))}, o pedilo como urgencia.`; }
+    else if (brief.publicacion && pub < due) { status.className = 'brief-status is-bad'; status.textContent = 'La publicación es antes que la entrega de diseño. Revisá las fechas.'; }
+    else { status.className = 'brief-status is-ok'; status.textContent = `Entra en el plazo de «${tipo[1]}».`; }
+    const faltan = [];
+    if (!brief.solicitante) faltan.push('Quién pide');
+    if (!brief.canales.length) faltan.push('Al menos un canal');
+    if (!brief.mensaje) faltan.push('Mensaje principal');
+    if (!brief.codigos && ['Vender un producto', 'Lanzar una fragancia'].includes(brief.objetivo)) faltan.push('Códigos de producto');
+    if (!brief.materiales.includes('Textos aprobados') && !brief.textos) faltan.push('Textos');
+    missing.replaceChildren(...(faltan.length ? [h('li', { class: 'is-title', text: 'Antes de enviar, completá:' }), ...faltan.map(t => h('li', { text: t }))] : [h('li', { class: 'is-ok', text: 'El brief tiene todo lo necesario.' })]));
+    out.textContent = briefText();
+    saveBrief();
   };
-  const fieldEl = (label, key, { type = 'text', options = null, multiline = false, wide = false } = {}) => {
-    const id = `brief-${key}`;
-    let el;
-    if (options) { el = h('select', { id }, options.map(([v, t]) => h('option', { value: v, text: t }))); }
-    else el = h(multiline ? 'textarea' : 'input', { id, type: multiline ? undefined : type, rows: multiline ? 3 : undefined });
+  const fid = key => `brief-${key}`;
+  const wrapF = (label, key, el, wide) => h('div', { class: `tpl-field${wide ? ' is-wide' : ''}` }, [h('label', { for: fid(key), text: label }), el]);
+  const text = (label, key, { wide = false, multiline = false, placeholder = '' } = {}) => {
+    const el = h(multiline ? 'textarea' : 'input', { id: fid(key), rows: multiline ? 4 : undefined, placeholder });
+    el.value = brief[key] || '';
+    el.addEventListener('input', () => { brief[key] = el.value; draw(); });
+    return wrapF(label, key, el, wide);
+  };
+  const select = (label, key, options, onChange) => {
+    const el = h('select', { id: fid(key) }, options.map(o => (Array.isArray(o) ? h('option', { value: o[0], text: o[1] }) : h('option', { value: o, text: o }))));
     el.value = brief[key];
-    el.addEventListener(options || type === 'date' ? 'change' : 'input', () => { brief[key] = el.value; draw(); });
-    if (type === 'date') el.addEventListener('input', () => { brief[key] = el.value; draw(); });
-    return h('div', { class: `tpl-field${wide ? ' is-wide' : ''}` }, [h('label', { for: id, text: label }), el]);
+    el.addEventListener('change', () => { brief[key] = el.value; onChange?.(); draw(); });
+    return wrapF(label, key, el);
   };
-  const form = h('div', { class: 'brief-form' }, [
-    fieldEl('Pieza', 'pieza'),
-    fieldEl('Tipo de pedido', 'tipo', { options: BRIEF_TIPOS.map(t => [t[0], t[1]]) }),
-    fieldEl('Formato', 'formato', { options: BRIEF_FORMATOS.map(f => [f, f]) }),
-    fieldEl('Pilar', 'pilar', { options: pilares.map(p => [p, p]) }),
-    fieldEl('Fecha de entrega', 'fecha', { type: 'date' }),
-    fieldEl('Códigos', 'codigos'),
-    fieldEl('Objetivo', 'objetivo', { wide: true }),
-    fieldEl('Textos', 'textos', { multiline: true, wide: true }),
-    fieldEl('Referencias o notas', 'referencias', { wide: true })
+  const date = (label, key) => {
+    const el = h('input', { id: fid(key), type: 'date' });
+    el.value = brief[key] || '';
+    ['input', 'change'].forEach(ev => el.addEventListener(ev, () => { brief[key] = el.value; draw(); }));
+    return [wrapF(label, key, el), el];
+  };
+  const checks = (label, key, options) => h('fieldset', { class: 'brief-checks is-wide' }, [h('legend', { text: label }), ...options.map((o, i) => {
+    const id = `${fid(key)}-${i}`;
+    const el = h('input', { type: 'checkbox', id, checked: brief[key].includes(o) });
+    el.addEventListener('change', () => { brief[key] = el.checked ? [...new Set([...brief[key], o])] : brief[key].filter(x => x !== o); draw(); });
+    return h('label', { for: id }, [el, h('span', { text: o })]);
+  })]);
+  const [entregaF, entregaEl] = date('Entrega de diseño', 'entrega');
+  const [pubF] = date('Publicación', 'publicacion');
+  const tipoF = select('Tipo de pedido', 'tipo', BRIEF_TIPOS.map(t => [t[0], `${t[1]} · ${t[2] === 0 ? 'cupo' : t[2] === 1 ? '24 h' : `${t[2]} días`}`]), () => {
+    const min = minFor(); if (new Date(`${brief.entrega}T12:00:00`) < min) { brief.entrega = isoDate(min); entregaEl.value = brief.entrega; }
+  });
+  const group = (title, children) => h('div', { class: 'brief-group' }, [h('h4', { text: title }), h('div', { class: 'brief-form' }, children)]);
+  const form = h('div', { class: 'brief-main' }, [
+    group('1 · Quién y qué', [
+      text('Quién pide', 'solicitante', { placeholder: 'Nombre y apellido' }),
+      select('Área', 'area', ['Marketing', 'Comercial', 'Revendedores', 'Atención al cliente', 'Dirección', 'Otra']),
+      tipoF,
+      select('Prioridad', 'prioridad', ['Normal', 'Alta', 'Baja']),
+      select('Pieza', 'pieza', BRIEF_PIEZAS),
+      text('Nombre de la pieza', 'titulo', { placeholder: 'Por ejemplo: Promo Día del Padre' })
+    ]),
+    group('2 · Dónde y para quién', [
+      checks('Canales', 'canales', BRIEF_CANALES),
+      checks('Formatos', 'formatos', BRIEF_FORMATOS),
+      select('Público', 'publico', ['Cliente final', 'Revendedores', 'Ambos'])
+    ]),
+    group('3 · Para qué y qué dice', [
+      select('Objetivo', 'objetivo', BRIEF_OBJETIVOS),
+      select('Botón o llamado a la acción', 'cta', BRIEF_CTAS),
+      text('Detalle del objetivo', 'detalle', { wide: true }),
+      text('Productos o códigos', 'codigos', { placeholder: 'N100, N36…' }),
+      text('Mensaje principal', 'mensaje', { placeholder: 'La idea en una frase' }),
+      text('Textos', 'textos', { multiline: true, wide: true })
+    ]),
+    group('4 · Fechas y materiales', [
+      entregaF, pubF,
+      checks('Materiales que ya tenés', 'materiales', BRIEF_MATERIALES),
+      text('Referencias o links', 'referencias', { wide: true }),
+      text('Quién aprueba', 'aprueba')
+    ])
   ]);
+  const wa = () => `https://wa.me/?text=${encodeURIComponent(briefText())}`;
   host.append(h('div', { class: 'brief kit-card' }, [
     form,
-    h('div', { class: 'brief-side' }, [status, out, h('div', { class: 'tpl-actions' }, [
-      h('button', { type: 'button', class: 'btn btn-primary', onclick: e => copyText(out.textContent, 'Brief', e.currentTarget) }, [icon(ICONS.copy), 'Copiar brief'])
+    h('div', { class: 'brief-side' }, [status, missing, out, h('div', { class: 'tpl-actions' }, [
+      h('button', { type: 'button', class: 'btn btn-primary', onclick: e => copyText(out.textContent, 'Brief', e.currentTarget) }, [icon(ICONS.copy), 'Copiar brief']),
+      h('button', { type: 'button', class: 'btn btn-outline', onclick: () => downloadBlob(briefText(), `brief-${safeId(brief.titulo || 'pieza')}.txt`, 'text/plain') }, [icon(ICONS.download), 'Descargar .txt']),
+      h('a', { class: 'btn btn-outline', href: '#', target: '_blank', rel: 'noopener', onclick: e => { e.currentTarget.href = wa(); } }, 'Enviar por WhatsApp'),
+      h('button', { type: 'button', class: 'btn btn-ghost', onclick: () => { brief = { ...clone(BRIEF_DEFAULT), solicitante: '', titulo: '', detalle: '', codigos: '', mensaje: '', textos: '', referencias: '', entrega: '', publicacion: '', canales: [], formatos: [], materiales: [] }; saveBrief(); const s = host.closest('.module-visual'); if (s) { s.replaceChildren(); renderBrief(s); } toast('Brief vaciado'); } }, 'Empezar de nuevo')
     ])])
   ]));
   draw();
@@ -886,7 +1058,7 @@ function renderGallery(items) {
   const cards = items.map(m => {
     const btn = h('button', { type: 'button', class: 'gallery-card', 'aria-label': `Ampliar ${m.title}` , onclick: e => openLightbox(galleryEntries, galleryEntries.indexOf(m), e.currentTarget) }, [
       h('span', { class: 'gallery-media' }, [
-        m.media ? h('img', { src: m.media, alt: `Maqueta conceptual: ${m.title}`, loading: 'lazy', decoding: 'async' }) : null,
+        m.media ? h('img', { src: m.media, alt: `Foto de producto: ${m.title}`, loading: 'lazy', decoding: 'async' }) : null,
         h('span', { class: 'media-zoom' }, icon(ICONS.expand))
       ]),
       h('span', { class: 'gallery-caption' }, [h('span', { class: 'tag', text: m.category || 'Otras' }), h('strong', { text: m.title }), m.body ? h('span', { class: 'gallery-text', text: m.body }) : null])
@@ -927,8 +1099,7 @@ function downloadBlob(content, name, type) {
 function paletteCSS() {
   const slug = n => n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const vars = data.palette.map(c => `  --extracto-${slug(c.name)}: ${c.hex}; /* RGB ${c.rgb} · CMYK ${c.cmyk} */`).join('\n');
-  const o = brandColor('#C89210', 0), k = brandColor('#000000', 1);
-  return `/* ${data.brand} · Paleta de marca · ${data.version} */\n:root {\n${vars}\n  --extracto-resplandor: linear-gradient(135deg, ${o} 0%, ${k} 100%);\n}\n`;
+  return `/* ${data.brand} · Paleta de marca · ${data.version} */\n:root {\n${vars}\n}\n`;
 }
 function paletteTXT() {
   return `${data.brand} · Paleta de marca · ${data.version}\n\n` + data.palette.map(c => `${c.name}\n  HEX  ${c.hex}\n  RGB  ${c.rgb}\n  CMYK ${c.cmyk}\n`).join('\n');
@@ -943,7 +1114,7 @@ function renderKit() {
   const body = h('div', { class: 'chapter-body kit-body' });
   // Paquete completo
   if (k.zip) body.append(h('div', { class: 'kit-hero reveal' }, [
-    h('div', {}, [h('strong', { text: 'Paquete de logos' }), h('p', { text: '5 versiones en color, en blanco y monocromáticas, en SVG y PNG de alta resolución con fondo transparente, más el archivo original.' })]),
+    h('div', {}, [h('strong', { text: 'Paquete de logos' }), h('p', { text: 'Logo, logotipo, monograma y versiones vertical y compacta, en color, blanco y monocromo. SVG y PNG con fondo transparente, más el archivo original.' })]),
     h('a', { class: 'btn btn-primary', href: k.zip, download: fileName(k.zip) }, [icon(ICONS.download), 'Descargar ZIP'])
   ]));
   // Logos
@@ -992,7 +1163,7 @@ function renderKit() {
   return sec;
 }
 
-/* ---------- Plantillas de uso rápido ---------- */
+/* ---------- Plantillas de flyers ---------- */
 const TPL_FORMATS = {
   post: { label: 'Publicación', size: '1080 × 1350', w: 1080, h: 1350 },
   square: { label: 'Cuadrado', size: '1080 × 1080', w: 1080, h: 1080 },
@@ -1000,27 +1171,55 @@ const TPL_FORMATS = {
   banner: { label: 'Banner web', size: '1440 × 360', w: 1440, h: 360 }
 };
 const tplFam = () => (tpl.format === 'square' ? 'post' : tpl.format);
-const F_SERIF = '"Gotham", "Montserrat", "Helvetica Neue", Arial, sans-serif';
 const F_SANS = '"Gotham", "Montserrat", "Helvetica Neue", Arial, sans-serif';
 const TPL_STYLES = {
-  negro: { label: 'Negro', bg: '#000000', glow: true, title: '#FFFFFF', text: '#C9C7C2', tag: '#E3C27A', bar: '#C89210', logo: 'oscuro', iso: 'oscuro', isoAlpha: 0.1, cta: '#C89210', ctaInk: '#000000', shade: '0,0,0' },
-  ambar: { label: 'Oro', bg: '#C89210', glow: false, title: '#000000', text: '#000000', tag: '#000000', bar: '#000000', logo: 'ambar', iso: 'ambar', isoAlpha: 0.14, cta: '#000000', ctaInk: '#FFFFFF', shade: '200,146,16' },
-  claro: { label: 'Claro', bg: '#F4F3F0', glow: false, title: '#000000', text: '#3A3A38', tag: '#000000', bar: '#C89210', logo: 'claro', iso: 'claro', isoAlpha: 0.08, cta: '#000000', ctaInk: '#FFFFFF', shade: '244,243,240' }
+  blanco: { label: 'Blanco', bg: '#FFFFFF', card: '#FFFFFF', title: '#050505', text: '#3A3A38', tag: '#9A700C', rule: '#C89210', frame: '#050505', logo: 'claro', iso: 'claro', isoAlpha: 0.05, cta: '#050505', ctaInk: '#FFFFFF', shade: '255,255,255' },
+  niebla: { label: 'Niebla', bg: '#F4F3F0', card: '#FBFAF7', title: '#050505', text: '#3A3A38', tag: '#9A700C', rule: '#C89210', frame: '#050505', logo: 'claro', iso: 'claro', isoAlpha: 0.06, cta: '#050505', ctaInk: '#FFFFFF', shade: '244,243,240' },
+  negro: { label: 'Negro', bg: '#050505', card: '#0B0B0B', title: '#FFFFFF', text: '#C9C7C2', tag: '#E3C27A', rule: '#C89210', frame: '#FFFFFF', logo: 'oscuro', iso: 'oscuro', isoAlpha: 0.07, cta: '#FFFFFF', ctaInk: '#050505', shade: '5,5,5' }
 };
-const TPL_LAYOUTS = [['clasica', 'Clásica'], ['centrada', 'Centrada'], ['panel', 'Panel']];
+const TPL_LAYOUTS = [['etiqueta', 'Etiqueta'], ['marco', 'Marco'], ['clasica', 'Clásica'], ['centrada', 'Centrada'], ['panel', 'Panel']];
+const FOTO = n => `media/fotos/foto-${n}.webp`;
+/* Plantillas listas: cada una fija formato, estructura, color, textos y foto de fondo */
+const TPL_PRESETS = [
+  { id: 'lanzamiento', name: 'Lanzamiento', use: 'Historia · fragancia nueva', format: 'story', layout: 'marco', style: 'blanco', tag: 'Nueva fragancia', title: 'Muy pronto, un número nuevo', text: 'Seguinos para ser de los primeros en conocerla.', cta: 'Activá el recordatorio', photo: 'parfum-100-ambar', zoom: 1.25, oy: -0.12, shade: 70 },
+  { id: 'best-seller', name: 'Best seller', use: 'Publicación · fragancia', format: 'post', layout: 'etiqueta', style: 'blanco', tag: 'Extracto N100', title: 'Dulce, cálido y persistente', text: 'Pera, iris y praliné. 100 ml.', cta: '', photo: 'parfum-100-spray', zoom: 1, oy: -0.1, shade: 15 },
+  { id: 'promo-dos', name: 'Promo por cantidad', use: 'Cuadrado · promoción', format: 'square', layout: 'panel', style: 'niebla', tag: 'Promo del mes', title: 'Llevando dos, pagás menos', text: 'Todos los medios de pago y 3 cuotas sin interés.', cta: 'Pedilo por WhatsApp', photo: 'duo', zoom: 1.05, oy: 0.05, shade: 0 },
+  { id: 'regalo', name: 'Fecha especial', use: 'Historia · regalos', format: 'story', layout: 'etiqueta', style: 'blanco', tag: 'Día de la Madre', title: 'Hay aromas que tienen nombre', text: 'Uno para ella, uno para vos.', cta: 'Ver la guía de regalo', photo: 'parfum-50-ambar', zoom: 1.2, oy: -0.12, shade: 20 },
+  { id: 'body-mist', name: 'Body Mist', use: 'Publicación · producto', format: 'post', layout: 'panel', style: 'blanco', tag: 'Body Mist · 200 ml', title: 'Tu fragancia, todo el día', text: 'Una bruma liviana para el cuerpo y la ropa.', cta: '', photo: 'bodymist-linea', zoom: 1.15, oy: 0, shade: 0 },
+  { id: 'linea-body-mist', name: 'Banner web', use: 'Banner web · colección', format: 'banner', layout: 'panel', style: 'blanco', tag: 'Body Mist · 200 ml', title: 'Tu fragancia, todo el día', text: 'Una bruma liviana para el cuerpo y la ropa.', cta: 'Comprá online', photo: 'bodymist-linea', zoom: 1.1, oy: 0, shade: 0 },
+  { id: 'envios', name: 'Envíos', use: 'Cuadrado · información', format: 'square', layout: 'etiqueta', style: 'blanco', tag: 'Envíos a todo el país', title: 'Tu perfume, donde elijas', text: 'CABA en 24 h hábiles. GBA de 2 a 3 días. Interior de 3 a 5 días.', cta: '', photo: 'cajas', zoom: 1.35, oy: -0.2, shade: 10 },
+  { id: 'cuotas', name: 'Cuotas sin interés', use: 'Cuadrado · medios de pago', format: 'square', layout: 'etiqueta', style: 'blanco', tag: 'Todos los medios de pago', title: '3 cuotas sin interés', text: 'Con Mercado Pago. Transferencia con descuento.', cta: '', photo: 'duo', zoom: 1, oy: -0.2, shade: 15 },
+  { id: 'revendedores', name: 'Sumate a Vende Extracto', use: 'Historia · captar revendedores', format: 'story', layout: 'panel', style: 'negro', tag: 'Vende Extracto', title: 'Convertí Extracto en tu negocio', text: 'Precios especiales, más de 200 fragancias y soporte para vender.', cta: 'Escribinos', photo: 'pila-tapa', zoom: 1.1, oy: 0, shade: 0 },
+  { id: 'stock', name: 'Llegó stock', use: 'Publicación · reposición', format: 'post', layout: 'panel', style: 'blanco', tag: 'Volvieron', title: 'Los más pedidos', text: 'Consultá por tu código favorito antes de que se agote.', cta: 'Reservá el tuyo', photo: 'cajas', zoom: 1.2, oy: 0, shade: 0 },
+  { id: 'cultura', name: 'Cultura olfativa', use: 'Cuadrado · contenido', format: 'square', layout: 'centrada', style: 'niebla', tag: '¿Sabías que?', title: 'Un perfume tiene tres momentos', text: 'Las notas de salida se sienten primero, las de corazón aparecen después y las de fondo son las que quedan.', cta: '', photo: '', pattern: true, shade: 0 },
+  { id: 'testimonio', name: 'Reseña de cliente', use: 'Publicación · prueba social', format: 'post', layout: 'etiqueta', style: 'niebla', tag: 'Lo que dicen', title: '«Me encantó, dura un montón»', text: 'Sofía, Córdoba · EXTRACTO N100', cta: '', photo: 'parfum-50-claro', zoom: 1.05, oy: -0.12, shade: 15 },
+  { id: 'aviso', name: 'Aviso', use: 'Historia · horarios y feriados', format: 'story', layout: 'marco', style: 'niebla', tag: 'Aviso', title: 'Feriado del lunes', text: 'Los pedidos que entren ese día se despachan el martes. Gracias por tu paciencia.', cta: '', photo: '', pattern: true, shade: 0 },
+  { id: 'sorteo', name: 'Sorteo', use: 'Historia · comunidad', format: 'story', layout: 'panel', style: 'negro', tag: 'Sorteo', title: 'Ganá tu Extracto favorito', text: 'Seguinos, dale me gusta y etiquetá a dos amigos.', cta: 'Participá', photo: 'parfum-100-ambar', zoom: 1.1, oy: 0.04, shade: 0 }
+];
 const tpl = {
-  format: 'post', style: 'negro', layout: 'clasica',
-  tag: 'EXTRACTO N100', title: 'Dulce, cálido y persistente.',
-  text: 'Notas de pera, iris y praliné. Frasco de 100 ml. Envíos a todo el país.',
-  cta: '', pattern: true,
-  image: null, video: null, imageName: '', zoom: 1, ox: 0, oy: 0, shade: 60,
-  showLogo: true, clipStart: 0, clipLength: 8
+  format: 'post', style: 'blanco', layout: 'etiqueta',
+  tag: '', title: '', text: '', cta: '', pattern: false,
+  image: null, video: null, imageName: '', zoom: 1, ox: 0, oy: 0, shade: 40,
+  showLogo: true, clipStart: 0, clipLength: 8, preset: '', pendingImage: null
 };
 const imgCache = new Map();
 function loadImg(src) {
   if (!imgCache.has(src)) imgCache.set(src, new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; }));
   return imgCache.get(src);
 }
+function presetValues(p) {
+  return { format: p.format, layout: p.layout, style: p.style, tag: p.tag, title: p.title, text: p.text, cta: p.cta || '',
+    pattern: !!p.pattern, zoom: p.zoom || 1, ox: p.ox || 0, oy: p.oy || 0, shade: p.shade ?? 40, showLogo: p.showLogo !== false, preset: p.id };
+}
+/* Dibuja una plantilla en un lienzo aparte (lo usa el generador de miniaturas) */
+async function renderPresetTo(canvas, index) {
+  const p = TPL_PRESETS[index];
+  Object.assign(tpl, presetValues(p));
+  tpl.video = null; tpl.image = p.photo ? await loadImg(FOTO(p.photo)) : null;
+  await drawTemplate(canvas);
+  return canvas;
+}
+window.extractoTpl = { presets: TPL_PRESETS, renderPresetTo };
 const setLS = (ctx, px) => { if ('letterSpacing' in ctx) ctx.letterSpacing = `${px.toFixed(1)}px`; };
 function wrapLines(ctx, text, maxW) {
   const words = String(text || '').trim().split(/\s+/).filter(Boolean);
@@ -1032,59 +1231,68 @@ function wrapLines(ctx, text, maxW) {
   if (line) lines.push(line);
   return lines;
 }
+const TITLE_TRACK = 0.07;
 function fitTitle(ctx, text, maxW, size, maxLines, minSize) {
   let s = size, lines;
+  const t = String(text || '').toUpperCase();
   do {
-    ctx.font = `300 ${s}px ${F_SERIF}`; setLS(ctx, -0.015 * s);
-    lines = wrapLines(ctx, text, maxW);
-    s -= 4;
+    ctx.font = `300 ${s}px ${F_SANS}`; setLS(ctx, TITLE_TRACK * s);
+    lines = wrapLines(ctx, t, maxW);
+    s -= 3;
   } while ((lines.length > maxLines || lines.some(l => ctx.measureText(l).width > maxW)) && s > minSize);
-  return { lines, size: s + 4 };
+  return { lines, size: s + 3 };
 }
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
-  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
-}
-/* Bloque de texto: etiqueta, titular, texto y botón, anclado arriba, abajo o al centro. */
+/* Bloque de texto: etiqueta, título en mayúsculas, filete dorado, texto y botón. Devuelve su alto. */
 function textBlock(ctx, S, o) {
   const parts = [];
-  if (tpl.tag) parts.push({ type: 'tag', h: o.tagSize, gap: o.tagSize * 0.95 });
-  if (tpl.title) { const t = fitTitle(ctx, tpl.title, o.w, o.titleSize, o.maxLines, o.titleSize * 0.5); parts.push({ type: 'title', h: t.lines.length * t.size, t, gap: o.titleSize * 0.34 }); }
+  const lh = 1.14;
+  if (tpl.tag) parts.push({ type: 'tag', h: o.tagSize, gap: o.tagSize * 1.1 });
+  if (tpl.title) { const t = fitTitle(ctx, tpl.title, o.w, o.titleSize, o.maxLines, o.titleSize * 0.45); parts.push({ type: 'title', h: (t.lines.length - 1) * t.size * lh + t.size * 0.78, t, gap: o.titleSize * 0.42 }); }
+  if (o.rule !== false && tpl.title) parts.push({ type: 'rule', h: Math.max(2, o.tagSize * 0.09), gap: o.textSize ? o.textSize * 1.1 : o.tagSize });
   if (tpl.text && o.textLines) {
     ctx.font = `400 ${o.textSize}px ${F_SANS}`; setLS(ctx, 0);
     const lines = wrapLines(ctx, tpl.text, o.w).slice(0, o.textLines);
-    parts.push({ type: 'text', h: lines.length * o.textSize * 1.45, lines, gap: o.textSize * 1.1 });
+    parts.push({ type: 'text', h: lines.length * o.textSize * 1.5, lines, gap: o.textSize * 1.3 });
   }
-  if (tpl.cta && o.ctaSize) parts.push({ type: 'cta', h: o.ctaSize * 2.3, gap: 0 });
+  if (tpl.cta && o.ctaSize) parts.push({ type: 'cta', h: o.ctaSize * 3, gap: 0 });
+  while (parts.length && parts.at(-1).type === 'rule') parts.pop();
   const total = parts.reduce((a, p, i) => a + p.h + (i < parts.length - 1 ? p.gap : 0), 0);
+  if (o.measure) return total;
   let y = o.bottom !== undefined ? o.bottom - total : o.center !== undefined ? o.center - total / 2 : o.top;
   const ax = o.align === 'center' ? o.x + o.w / 2 : o.align === 'right' ? o.x + o.w : o.x;
   ctx.textBaseline = 'alphabetic';
   for (const p of parts) {
     if (p.type === 'tag') {
-      ctx.font = `500 ${o.tagSize}px ${F_SANS}`; setLS(ctx, 0.18 * o.tagSize);
-      const tw = ctx.measureText(tpl.tag).width, barW = o.tagSize * 1.3, gap = o.tagSize * 0.5, full = barW + gap + tw;
-      const sx = o.align === 'center' ? ax - full / 2 : o.align === 'right' ? ax - full : ax;
-      ctx.fillStyle = S.bar; ctx.fillRect(sx, y + o.tagSize * 0.44, barW, Math.max(3, o.tagSize * 0.14));
-      ctx.fillStyle = S.tag; ctx.textAlign = 'left'; ctx.fillText(tpl.tag, sx + barW + gap, y + o.tagSize * 0.8);
+      ctx.font = `500 ${o.tagSize}px ${F_SANS}`; setLS(ctx, 0.28 * o.tagSize);
+      ctx.fillStyle = S.tag; ctx.textAlign = o.align;
+      // el tracking agrega aire al final: se compensa al centrar o alinear a la derecha
+      const shift = o.align === 'center' ? 0.14 * o.tagSize : o.align === 'right' ? 0.28 * o.tagSize : 0;
+      ctx.fillText(tpl.tag.toUpperCase(), ax + shift, y + o.tagSize * 0.82);
     } else if (p.type === 'title') {
-      ctx.font = `300 ${p.t.size}px ${F_SERIF}`; setLS(ctx, -0.015 * p.t.size);
+      ctx.font = `300 ${p.t.size}px ${F_SANS}`; setLS(ctx, TITLE_TRACK * p.t.size);
       ctx.fillStyle = S.title; ctx.textAlign = o.align;
-      p.t.lines.forEach((l, i) => ctx.fillText(l, ax, y + p.t.size * 0.8 + i * p.t.size));
+      const shift = o.align === 'center' ? TITLE_TRACK * p.t.size / 2 : o.align === 'right' ? TITLE_TRACK * p.t.size : 0;
+      p.t.lines.forEach((l, i) => ctx.fillText(l, ax + shift, y + p.t.size * 0.78 + i * p.t.size * lh));
+    } else if (p.type === 'rule') {
+      const rw = o.tagSize * 3.2;
+      const rx = o.align === 'center' ? ax - rw / 2 : o.align === 'right' ? ax - rw : ax;
+      ctx.fillStyle = S.rule; ctx.fillRect(rx, y, rw, p.h);
     } else if (p.type === 'text') {
       ctx.font = `400 ${o.textSize}px ${F_SANS}`; setLS(ctx, 0);
       ctx.fillStyle = S.text; ctx.textAlign = o.align;
-      p.lines.forEach((l, i) => ctx.fillText(l, ax, y + o.textSize * 1.05 + i * o.textSize * 1.45));
+      p.lines.forEach((l, i) => ctx.fillText(l, ax, y + o.textSize * 1.05 + i * o.textSize * 1.5));
     } else if (p.type === 'cta') {
-      ctx.font = `500 ${o.ctaSize}px ${F_SANS}`; setLS(ctx, 0);
-      const tw = ctx.measureText(tpl.cta).width, bw = tw + o.ctaSize * 2.2, bh = o.ctaSize * 2.3;
+      ctx.font = `500 ${o.ctaSize}px ${F_SANS}`; setLS(ctx, 0.2 * o.ctaSize);
+      const label = tpl.cta.toUpperCase();
+      const tw = ctx.measureText(label).width, bw = tw + o.ctaSize * 3, bh = o.ctaSize * 3;
       const bx = o.align === 'center' ? ax - bw / 2 : o.align === 'right' ? ax - bw : ax;
-      ctx.fillStyle = S.cta; roundRect(ctx, bx, y, bw, bh, bh / 2); ctx.fill();
-      ctx.fillStyle = S.ctaInk; ctx.textAlign = 'center'; ctx.fillText(tpl.cta, bx + bw / 2, y + bh / 2 + o.ctaSize * 0.36);
+      ctx.fillStyle = S.cta; ctx.fillRect(bx, y, bw, bh);
+      ctx.fillStyle = S.ctaInk; ctx.textAlign = 'center'; ctx.fillText(label, bx + bw / 2 + 0.1 * o.ctaSize, y + bh / 2 + o.ctaSize * 0.36);
     }
     y += p.h + p.gap;
   }
   ctx.textAlign = 'left'; setLS(ctx, 0);
+  return total;
 }
 function drawCover(ctx, img, x, y, w, h) {
   // Sirve tanto para imágenes como para el cuadro actual de un video
@@ -1096,113 +1304,136 @@ function drawCover(ctx, img, x, y, w, h) {
   dx = Math.min(x, Math.max(x + w - dw, dx)); dy = Math.min(y, Math.max(y + h - dh, dy));
   ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip(); ctx.drawImage(img, dx, dy, dw, dh); ctx.restore();
 }
-function drawPattern(ctx, iso, S, W, H, region) {
+function drawPattern(ctx, iso, S, region) {
   const { x, y, w, h } = region;
-  const t = Math.min(w, h) * (tplFam() === 'banner' ? 0.3 : 0.1), th = t * iso.height / iso.width, gap = t * 0.1;
-  const maxD = Math.hypot(w, h) * (tplFam() === 'banner' ? 0.45 : 0.62);
-  ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
-  for (let yy = y + h - th; yy > y - th; yy -= th + gap) for (let xx = x + w - t; xx > x - t; xx -= t + gap) {
-    const a = S.isoAlpha * Math.max(0, 1 - Math.hypot(x + w - xx, y + h - yy) / maxD);
-    if (a > 0.004) { ctx.globalAlpha = a; ctx.drawImage(iso, xx, yy, t, th); }
+  const t = Math.min(w, h) * (tplFam() === 'banner' ? 0.22 : 0.075), th = t * iso.height / iso.width, gx = t * 0.9, gy = th * 1.6;
+  ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip(); ctx.globalAlpha = S.isoAlpha;
+  let row = 0;
+  for (let yy = y + gy * 0.3; yy < y + h; yy += th + gy, row++) {
+    for (let xx = x + (row % 2 ? (t + gx) / 2 : 0) - t / 2; xx < x + w; xx += t + gx) ctx.drawImage(iso, xx, yy, t, th);
   }
   ctx.restore(); ctx.globalAlpha = 1;
 }
-/* Área de la imagen y del panel según estructura y formato */
+/* Área de la imagen y del panel según formato */
 function panelGeometry(W, H) {
-  if (tpl.layout !== 'panel') return null;
   const fmt = tplFam();
-  if (fmt === 'story') return { panel: { x: 0, y: H * 0.56, w: W, h: H * 0.44 }, image: { x: 0, y: 0, w: W, h: H * 0.56 } };
-  if (fmt === 'banner') return { panel: { x: W * 0.52, y: 0, w: W * 0.48, h: H }, image: { x: 0, y: 0, w: W * 0.52, h: H } };
-  const pw = fmt === 'post' ? W * 0.5 : W * 0.42;
-  return { panel: { x: 0, y: 0, w: pw, h: H }, image: { x: pw, y: 0, w: W - pw, h: H } };
+  if (fmt === 'story') return { panel: { x: 0, y: H * 0.6, w: W, h: H * 0.4 }, image: { x: 0, y: 0, w: W, h: H * 0.6 } };
+  if (fmt === 'banner') return { panel: { x: W * 0.5, y: 0, w: W * 0.5, h: H }, image: { x: 0, y: 0, w: W * 0.5, h: H } };
+  return { panel: { x: 0, y: H * 0.62, w: W, h: H * 0.38 }, image: { x: 0, y: 0, w: W, h: H * 0.62 } };
 }
 async function drawTemplate(canvas) {
-  const F = TPL_FORMATS[tpl.format];
-  let S = TPL_STYLES[tpl.style];
+  const F = TPL_FORMATS[tpl.format] || TPL_FORMATS.post;
+  const S = TPL_STYLES[tpl.style] || TPL_STYLES.blanco;
   const W = F.w, H = F.h;
   if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
   const ctx = canvas.getContext('2d');
-  if (!drawTemplate.fonts) drawTemplate.fonts = Promise.all([document.fonts.load('300 40px "Gotham"'), document.fonts.load('500 40px "Gotham"'), document.fonts.load('400 20px "Gotham"')]).catch(() => {});
+  if (!drawTemplate.fonts) drawTemplate.fonts = Promise.all([document.fonts.load(`300 40px ${F_SANS}`), document.fonts.load(`500 40px ${F_SANS}`), document.fonts.load(`400 20px ${F_SANS}`)]).catch(() => {});
   await drawTemplate.fonts;
-  ctx.clearRect(0, 0, W, H);
-  // Con imagen de fondo a pantalla completa, los textos se ajustan para leerse sobre el velo
-  if ((tpl.image || tpl.video) && tpl.layout !== 'panel') {
-    if (tpl.style === 'negro') S = { ...S, text: '#E6E6E6', tag: '#FFFFFF' };
-    if (tpl.style === 'ambar') S = { ...S, title: '#FFFFFF', text: '#FFFFFF', tag: '#FFFFFF', bar: '#FFFFFF', cta: '#FFFFFF', ctaInk: '#000000' };
-    if (tpl.style === 'claro') S = { ...S, text: '#000000' };
-  }
   const [logo, iso] = await Promise.all([loadImg(logoAsset('principal', S.logo)), loadImg(logoAsset('isotipo', S.iso))]);
+  ctx.clearRect(0, 0, W, H);
   const img = tpl.video || tpl.image;
-  const geo = panelGeometry(W, H);
+  const f = tplFam(), L = tpl.layout;
   const u = Math.min(W, H) / 1080;
-  // 1. Fondo de color
-  ctx.fillStyle = S.bg; ctx.fillRect(0, 0, W, H);
-  // 2. Imagen (toda la pieza, o solo el área de imagen en la estructura Panel)
-  const imgArea = geo ? geo.image : { x: 0, y: 0, w: W, h: H };
-  if (img) {
-    drawCover(ctx, img, imgArea.x, imgArea.y, imgArea.w, imgArea.h);
-    if (!geo) {
-      // Velo para asegurar la lectura del texto, con el color del fondo elegido
-      const a = tpl.shade / 100;
-      if (tpl.style === 'ambar') {
-        ctx.save(); ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = `rgba(200,146,16,${0.35 + a * 0.55})`; ctx.fillRect(0, 0, W, H); ctx.restore();
-      }
-      const tint = tpl.style === 'ambar' ? '0,0,0' : S.shade;
-      if (tpl.layout === 'centrada') {
-        ctx.fillStyle = `rgba(${tint},${a * 0.7})`; ctx.fillRect(0, 0, W, H);
-        const r = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, Math.max(W, H) * 0.55);
-        r.addColorStop(0, `rgba(${tint},${Math.min(0.9, a * 1.1)})`); r.addColorStop(1, `rgba(${tint},0)`);
-        ctx.fillStyle = r; ctx.fillRect(0, 0, W, H);
-      } else {
-        const g = tplFam() === 'banner' ? ctx.createLinearGradient(W, 0, W * 0.3, 0) : ctx.createLinearGradient(0, H, 0, H * 0.25);
-        g.addColorStop(0, `rgba(${tint},${Math.min(0.95, a * 1.25)})`); g.addColorStop(1, `rgba(${tint},${a * 0.15})`);
-        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-      }
-    }
-  } else if (S.glow && !geo) {
-    const g = ctx.createRadialGradient(W, H, 0, W, H, Math.max(W, H) * 0.95);
-    g.addColorStop(0, 'rgba(200,146,16,0.62)'); g.addColorStop(0.38, 'rgba(200,146,16,0.2)'); g.addColorStop(0.7, 'rgba(200,146,16,0)');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-  }
-  // 3. Panel sólido
-  if (geo) {
-    const p = geo.panel;
-    ctx.fillStyle = S.bg; ctx.fillRect(p.x, p.y, p.w, p.h);
-    if (!img) { // sin imagen, el área de imagen muestra la trama sobre el color opuesto
-      ctx.fillStyle = tpl.style === 'negro' ? '#C89210' : '#000000'; ctx.fillRect(imgArea.x, imgArea.y, imgArea.w, imgArea.h);
-    }
-  }
-  // 4. Trama del isotipo
-  // Sobre una foto la trama recarga la pieza: solo se aplica en el panel o en fondos lisos
-  if (tpl.pattern && (geo || !img)) drawPattern(ctx, iso, S, W, H, geo ? geo.panel : { x: 0, y: 0, w: W, h: H });
-  // 5. Logo y textos
+  const isBanner = f === 'banner';
   const logoW = hgt => hgt * logo.width / logo.height;
-  const drawLogo = (x, y, hgt) => { if (tpl.showLogo) ctx.drawImage(logo, x, y, logoW(hgt), hgt); };
-  const L = tpl.layout, f = tplFam();
+  const drawLogo = (x, y, hgt, align = 'left') => {
+    if (!tpl.showLogo) return;
+    const w = logoW(hgt); const lx = align === 'center' ? x - w / 2 : align === 'right' ? x - w : x;
+    ctx.drawImage(logo, lx, y, w, hgt);
+  };
+  const veil = (dir, a) => {
+    if (!img || a <= 0) return;
+    const al = a / 100;
+    if (dir === 'all') { ctx.fillStyle = `rgba(${S.shade},${al * 0.8})`; ctx.fillRect(0, 0, W, H); return; }
+    const g = dir === 'right' ? ctx.createLinearGradient(W, 0, W * 0.35, 0) : ctx.createLinearGradient(0, H, 0, H * 0.35);
+    g.addColorStop(0, `rgba(${S.shade},${Math.min(0.97, al * 1.25)})`); g.addColorStop(0.55, `rgba(${S.shade},${al * 0.7})`); g.addColorStop(1, `rgba(${S.shade},0)`);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  };
+  // 1. Fondo
+  ctx.fillStyle = S.bg; ctx.fillRect(0, 0, W, H);
+  // 2. Imagen, velo y trama
+  let geo = L === 'panel' ? panelGeometry(W, H) : null;
+  const sizesFor = k => ({
+    story: { titleSize: 92 * u, tagSize: 26 * u, textSize: 34 * u, ctaSize: 22 * u, textLines: 4, maxLines: 4 },
+    post: { titleSize: 76 * u, tagSize: 22 * u, textSize: 30 * u, ctaSize: 20 * u, textLines: 3, maxLines: 3 },
+    banner: { titleSize: 50, tagSize: 15, textSize: 19, ctaSize: 14, textLines: 2, maxLines: 2 }
+  })[k];
+  const Z = sizesFor(f);
+  const PM = isBanner ? 44 : 80 * u, PLOGO = (f === 'story' ? 44 : 38) * u;
+  if (geo && !isBanner) {
+    // El panel crece lo necesario para que el texto nunca invada la foto
+    const textH = textBlock(ctx, S, { ...Z, w: W - 2 * PM, measure: true, maxLines: 2, textLines: 2 });
+    const need = PM * 0.9 + (tpl.showLogo ? PLOGO + 34 * u : 0) + textH + PM * 0.85;
+    const ph = Math.min(H * 0.62, Math.max(H * (f === 'story' ? 0.4 : 0.36), need));
+    geo = { panel: { x: 0, y: H - ph, w: W, h: ph }, image: { x: 0, y: 0, w: W, h: H - ph } };
+  }
+  if (geo) {
+    if (img) drawCover(ctx, img, geo.image.x, geo.image.y, geo.image.w, geo.image.h);
+    else { ctx.fillStyle = tpl.style === 'negro' ? '#161616' : '#F4F3F0'; ctx.fillRect(geo.image.x, geo.image.y, geo.image.w, geo.image.h); drawPattern(ctx, iso, S, geo.image); }
+    ctx.fillStyle = S.bg; ctx.fillRect(geo.panel.x, geo.panel.y, geo.panel.w, geo.panel.h);
+    ctx.fillStyle = S.rule; if (isBanner) ctx.fillRect(geo.panel.x, 0, Math.max(2, 3 * u), H); else ctx.fillRect(0, geo.panel.y, W, Math.max(2, 3 * u));
+  } else if (img) {
+    drawCover(ctx, img, 0, 0, W, H);
+    if (L === 'centrada') veil('all', tpl.shade);
+    else if (L === 'etiqueta') veil('all', tpl.shade * 0.4);
+    else veil(isBanner ? 'right' : 'bottom', tpl.shade);
+  }
+  if (tpl.pattern && !img && !geo) drawPattern(ctx, iso, S, { x: 0, y: 0, w: W, h: H });
+  // 3. Estructura, logo y textos
   if (L === 'panel') {
-    const p = geo.panel, m = (f === 'banner' ? 40 : 72 * u), lh = f === 'banner' ? 30 : 44 * u;
-    if (f === 'banner') {
-      drawLogo(p.x + p.w - m - logoW(lh), p.y + p.h - m - lh, lh);
-      textBlock(ctx, S, { x: p.x + m, w: p.w - 2 * m, align: 'right', top: m, titleSize: 44, maxLines: 2, tagSize: 18, textSize: 0, textLines: 0, ctaSize: 0 });
+    const p = geo.panel, m = PM;
+    if (isBanner) {
+      drawLogo(p.x + p.w - m, H - m - 26, 26, 'right');
+      textBlock(ctx, S, { ...Z, x: p.x + m, w: p.w - 2 * m, align: 'left', top: m - 6, textLines: 1 });
     } else {
-      drawLogo(p.x + m, p.y + m, lh);
-      textBlock(ctx, S, { x: p.x + m, w: p.w - 2 * m, align: 'left', bottom: p.y + p.h - m, titleSize: (f === 'story' ? 96 : f === 'video' ? 64 : 72) * (f === 'video' ? 1 : u), maxLines: 4, tagSize: (f === 'video' ? 22 : 26 * u), textSize: f === 'video' ? 24 : 28 * u, textLines: f === 'story' ? 3 : 4, ctaSize: f === 'video' ? 22 : 26 * u });
+      drawLogo(m, p.y + m * 0.9, PLOGO, 'left');
+      textBlock(ctx, S, { ...Z, x: m, w: W - 2 * m, align: 'left', bottom: H - m * 0.85, maxLines: 2, textLines: 2 });
     }
-  } else if (L === 'centrada') {
-    const lh = f === 'banner' ? 30 : (f === 'video' ? 46 : 50 * u);
-    if (f === 'banner') {
-      drawLogo(W - 40 - logoW(lh), H - 40 - lh, lh);
-      textBlock(ctx, S, { x: W * 0.2, w: W * 0.6, align: 'center', center: H / 2 - 10, titleSize: 56, maxLines: 2, tagSize: 18, textSize: 0, textLines: 0, ctaSize: 0 });
+  } else if (L === 'marco') {
+    const m = isBanner ? 16 : 44 * u, lw = Math.max(1.5, 2 * u);
+    ctx.strokeStyle = S.frame; ctx.lineWidth = lw; ctx.strokeRect(m, m, W - 2 * m, H - 2 * m);
+    ctx.strokeStyle = S.rule; ctx.lineWidth = Math.max(1, lw * 0.6); ctx.strokeRect(m + 10 * u, m + 10 * u, W - 2 * m - 20 * u, H - 2 * m - 20 * u);
+    if (isBanner) {
+      drawLogo(W - 60, H / 2 - 16, 32, 'right');
+      textBlock(ctx, S, { ...Z, x: 64, w: W * 0.5, align: 'left', center: H / 2 });
     } else {
-      drawLogo(W / 2 - logoW(lh) / 2, (f === 'story' ? 150 : 80) * (f === 'video' ? 1 : u), lh);
-      const m = (f === 'video' ? 260 : 110 * u);
-      textBlock(ctx, S, { x: m, w: W - 2 * m, align: 'center', center: H / 2 + (f === 'story' ? 40 : 30) * u, titleSize: (f === 'story' ? 120 : f === 'video' ? 84 : 100) * (f === 'video' ? 1 : u), maxLines: 4, tagSize: f === 'video' ? 26 : 30 * u, textSize: f === 'video' ? 28 : 32 * u, textLines: 3, ctaSize: f === 'video' ? 26 : 30 * u });
+      drawLogo(W / 2, m + (f === 'story' ? 110 : 70) * u, (f === 'story' ? 64 : 54) * u, 'center');
+      const pad = 110 * u;
+      textBlock(ctx, S, { ...Z, x: pad, w: W - 2 * pad, align: 'center', bottom: H - m - (f === 'story' ? 150 : 90) * u });
+    }
+  } else if (L === 'etiqueta') {
+    const cw = isBanner ? W * 0.42 : W * (f === 'story' ? 0.78 : 0.74);
+    const inner = isBanner ? 30 : 64 * u;
+    const lh = isBanner ? 0 : (f === 'story' ? 56 : 48) * u;
+    const textH = textBlock(ctx, S, { ...Z, w: cw - 2 * inner, measure: true, maxLines: isBanner ? 2 : 3 });
+    const ch = inner * 2 + (lh ? lh + 36 * u : 0) + textH + (isBanner ? 0 : 12 * u);
+    const cx = isBanner ? W - cw - 40 : (W - cw) / 2;
+    const cy = isBanner ? (H - ch) / 2 : H - ch - (f === 'story' ? 180 : 70) * u;
+    ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.12)'; ctx.shadowBlur = 40 * u; ctx.shadowOffsetY = 12 * u;
+    ctx.fillStyle = S.card; ctx.fillRect(cx, cy, cw, ch); ctx.restore();
+    const fi = isBanner ? 8 : 16 * u;
+    ctx.strokeStyle = S.frame; ctx.lineWidth = Math.max(1.2, 1.6 * u); ctx.strokeRect(cx + fi, cy + fi, cw - 2 * fi, ch - 2 * fi);
+    if (lh) drawLogo(cx + cw / 2, cy + inner, lh, 'center');
+    textBlock(ctx, S, { ...Z, x: cx + inner, w: cw - 2 * inner, align: 'center', top: cy + inner + (lh ? lh + 36 * u : 0), maxLines: isBanner ? 2 : 3 });
+    if (isBanner && tpl.showLogo) drawLogo(40, H / 2 - 16, 32, 'left');
+  } else if (L === 'centrada') {
+    if (isBanner) {
+      drawLogo(W - 44, H - 44 - 24, 24, 'right');
+      textBlock(ctx, S, { ...Z, x: W * 0.2, w: W * 0.6, align: 'center', center: H / 2 });
+    } else {
+      drawLogo(W / 2, (f === 'story' ? 150 : 90) * u, (f === 'story' ? 60 : 50) * u, 'center');
+      const pad = 120 * u;
+      textBlock(ctx, S, { ...Z, x: pad, w: W - 2 * pad, align: 'center', center: H / 2 + 40 * u, maxLines: 4 });
     }
   } else { // clásica
-    if (f === 'post') { const m = 88 * u; drawLogo(m, m, 46 * u); textBlock(ctx, S, { x: m, w: W - 2 * m, align: 'left', bottom: H - m, titleSize: 96 * u, maxLines: 4, tagSize: 29 * u, textSize: 32 * u, textLines: 3, ctaSize: 28 * u }); }
-    else if (f === 'story') { const m = 96 * u; drawLogo(m, 150 * u, 54 * u); textBlock(ctx, S, { x: m, w: W - 2 * m, align: 'left', bottom: H - 300 * u, titleSize: 116 * u, maxLines: 5, tagSize: 35 * u, textSize: 38 * u, textLines: 4, ctaSize: 34 * u }); }
-    else if (f === 'banner') { const m = 56; drawLogo(W - m - logoW(34), H - m - 34, 34); textBlock(ctx, S, { x: W * 0.4, w: W * 0.6 - m, align: 'right', bottom: H - m - 34 - 34, titleSize: 64, maxLines: 2, tagSize: 19, textSize: 0, textLines: 0, ctaSize: 0 }); }
-    else { const m = 72; drawLogo(m, m, 48); textBlock(ctx, S, { x: m, w: W * 0.42, align: 'left', bottom: H - m, titleSize: 60, maxLines: 2, tagSize: 18, textSize: 24, textLines: 2, ctaSize: 22 }); }
+    if (isBanner) {
+      drawLogo(W - 48, 44, 30, 'right');
+      textBlock(ctx, S, { ...Z, x: W * 0.52, w: W * 0.44, align: 'left', center: H / 2 + 8 });
+    } else {
+      const m = 88 * u;
+      drawLogo(m, m, (f === 'story' ? 56 : 46) * u);
+      textBlock(ctx, S, { ...Z, x: m, w: W - 2 * m, align: 'left', bottom: H - m - (f === 'story' ? 120 : 0) * u });
+    }
   }
 }
 const escapeHTML = v => String(v || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -1219,8 +1450,22 @@ function signatureHTML(f) {
 }
 function renderTemplates() {
   const wrap = h('div', { class: 'kit-templates reveal', id: 'plantillas' });
-  wrap.append(h('h3', { class: 'kit-subtitle', text: 'Plantillas de uso rápido' }),
-    h('p', { class: 'kit-intro', text: 'Piezas listas para usar: escribí el texto, elegí el formato y descargá. El sistema aplica colores, tipografías y logo según el manual.' }));
+  wrap.append(h('h3', { class: 'kit-subtitle', text: 'Plantillas de flyers' }),
+    h('p', { class: 'kit-intro', text: `${TPL_PRESETS.length} plantillas listas para redes, web y revendedores. Elegí una, cambiá los textos o la foto y descargala. El sistema aplica colores, tipografía y logo según el manual.` }));
+  const applyPreset = p => {
+    if (tpl.video) { cancelAnimationFrame(loopId); tpl.video.pause(); tpl.video = null; }
+    Object.assign(tpl, presetValues(p));
+    tpl.image = null; tpl.imageName = ''; tpl.pendingImage = p.photo ? FOTO(p.photo) : null;
+    const next = renderTemplates(); next.classList.add('in-view');
+    wrap.replaceWith(next);
+    next.querySelector('.tpl-card')?.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+  };
+  wrap.append(h('div', { class: 'preset-grid', role: 'group', 'aria-label': 'Plantillas de flyers' }, TPL_PRESETS.map(p => h('button', {
+    type: 'button', class: 'preset', 'aria-pressed': String(tpl.preset === p.id), onclick: () => applyPreset(p)
+  }, [
+    h('span', { class: `preset-thumb f-${p.format}` }, h('img', { src: `media/plantillas/${p.id}.webp`, alt: '', loading: 'lazy', onerror: e => { e.currentTarget.remove(); } })),
+    h('strong', { text: p.name }), h('span', { text: p.use })
+  ]))));
   // Generador de piezas
   const VIDEO_MAX_MB = 50;      // peso máximo del video de origen
   const CLIP_MAX_S = 15;        // duración máxima de la pieza exportada
@@ -1301,7 +1546,7 @@ function renderTemplates() {
   };
   const upload = h('input', { type: 'file', accept: 'image/*,video/mp4,video/webm,video/quicktime', class: 'sr-only' });
   upload.addEventListener('change', () => { handleFile(upload.files?.[0]); upload.value = ''; });
-  const thumbs = h('div', { class: 'tpl-thumbs', role: 'group', 'aria-label': 'Usar una maqueta del manual como fondo' },
+  const thumbs = h('div', { class: 'tpl-thumbs', role: 'group', 'aria-label': 'Usar una foto de producto como fondo' },
     data.sections.flatMap(sx => sx.modules).filter(m => m.kind === 'showcase' && m.media).map(m =>
       h('button', { type: 'button', class: 'tpl-thumb', 'aria-pressed': 'false', title: m.title, 'aria-label': `Usar ${m.title} como fondo`, onclick: () => setImage(m.media, m.title) }, h('img', { src: m.media, alt: '', loading: 'lazy' }))));
   // Carpeta de Google Drive
@@ -1433,22 +1678,22 @@ function renderTemplates() {
   const step = (n, title, children) => h('div', { class: 'tpl-step' }, [h('span', { class: 'tpl-step-n', text: n }), h('div', { class: 'tpl-step-body' }, [h('strong', { class: 'tpl-step-title', text: title }), ...children])]);
   wrap.append(h('article', { class: 'kit-card tpl-card' }, [
     h('div', { class: 'tpl-controls' }, [
-      h('h4', { text: 'Piezas para redes y web' }),
+      h('h4', { text: 'Editor de flyers' }),
       step('1', 'Formato y estructura', [
         segmented('Formato', Object.entries(TPL_FORMATS).map(([k, f]) => [k, f.label]), tpl.format, v => { tpl.format = v; redraw(0); }),
         segmented('Estructura', TPL_LAYOUTS, tpl.layout, v => { tpl.layout = v; redraw(0); }),
         segmented('Color', Object.entries(TPL_STYLES).map(([k, st]) => [k, st.label]), tpl.style, v => { tpl.style = v; redraw(0); })
       ]),
-      step('2', 'Fondo: imagen o video (opcional)', [
+      step('2', 'Fondo: foto, imagen o video', [
         h('div', { class: 'tpl-upload' }, [h('label', { class: 'btn btn-small btn-outline file-button' }, [icon(ICONS.upload), 'Subir imagen o video', upload]),
           h('span', { class: 'tpl-help', text: `Videos de hasta ${VIDEO_MAX_MB} MB; se exportan tramos de ${CLIP_MIN_S} a ${CLIP_MAX_S} s.` })]),
-        h('span', { class: 'control-label', text: 'Maquetas del manual' }), thumbs,
+        h('span', { class: 'control-label', text: 'Fotos de producto' }), thumbs,
         h('span', { class: 'control-label', text: 'Carpeta de Google Drive' }), driveBox,
         imgTools
       ]),
       step('3', 'Textos y logo', [
         input('Etiqueta', 'tag'), input('Titular', 'title'), input('Texto', 'text', true), input('Botón (opcional)', 'cta', false, 'Por ejemplo: Comprá online'),
-        h('div', { class: 'tpl-checks' }, [check('Mostrar logo', 'showLogo'), check('Trama del isotipo', 'pattern')])
+        h('div', { class: 'tpl-checks' }, [check('Mostrar logo', 'showLogo'), check('Trama del monograma', 'pattern')])
       ]),
       h('div', { class: 'tpl-actions' }, [download, exportBtn, status])
     ]),
@@ -1493,8 +1738,12 @@ function renderTemplates() {
     h('div', { class: 'kit-actions' }, links.filter(l => l[1]).map(([label, href]) => h('a', { class: 'btn btn-small btn-outline', href, download: fileName(href) }, [icon(ICONS.download), label])))]);
   wrap.append(h('div', { class: 'kit-row' }, [
     doc('Hoja membretada', 'Formato A4 con el logo, el filete dorado y los datos de la marca. En Word para escribir; en PDF para imprimir.', [['Word (.docx)', k.letterheadDocx], ['PDF', k.letterheadPdf]]),
-    doc('Manual en PDF', 'Una versión del manual para enviar a imprentas o proveedores. También podés imprimir esta página: el diseño se adapta solo.', [['Descargar PDF', k.manualPdf]])
+    doc('Manual en PDF', 'Una versión del manual para enviar a imprentas o proveedores. También podés imprimir esta página: el diseño se adapta solo.', [['Descargar PDF', k.manualPdf]]),
+    doc('Fotos de producto', 'Las 12 fotos oficiales en alta resolución, para redes, catálogos y piezas de revendedores.', [['Descargar ZIP', k.photosZip]]),
+    doc('Catálogo', 'Todos los códigos, familias y presentaciones. Se actualiza cada mes.', [['Descargar PDF', k.catalogPdf]])
   ]));
+  if (tpl.pendingImage) { const src = tpl.pendingImage; tpl.pendingImage = null; setImage(src, TPL_PRESETS.find(x => x.id === tpl.preset)?.name || 'Foto'); }
+  else if (!tpl.preset && !tpl.image) { const p0 = TPL_PRESETS[1]; Object.assign(tpl, presetValues(p0)); setImage(FOTO(p0.photo), p0.name); }
   requestAnimationFrame(() => { redraw(); drawSig(); });
   return wrap;
 }
@@ -1597,7 +1846,7 @@ function drawLightbox(direction = 0) {
   $('#lightboxTitle').textContent = m.title;
   $('#lightboxText').textContent = m.body || '';
   brandify($('#lightbox .lightbox-caption'));
-  $('#lightboxCategory').textContent = m.category || (m.kind === 'essence' || /mockup-/.test(m.media) ? 'Maqueta conceptual' : 'Referencia');
+  $('#lightboxCategory').textContent = m.category || (/mockup-/.test(m.media) ? 'Maqueta conceptual' : 'Extracto Importado');
   const multi = lightboxList.length > 1;
   $('#lightboxCount').textContent = multi ? `${pad2(lightboxIndex + 1)} / ${pad2(lightboxList.length)}` : '';
   $('#lightboxPrev').hidden = $('#lightboxNext').hidden = !multi;
@@ -1874,12 +2123,14 @@ function renderEditor() {
         cards: 'Una línea por tarjeta: «Título — Texto».',
         table: 'Una línea por fila, columnas separadas con «|». La primera línea es el encabezado.',
         catalog: 'Como la tabla. La tercera columna (equivalencia) se oculta en la vista para anuncios pagos.',
-        tone: 'Una línea por ejemplo: «Así sí || Así no».',
+        tone: 'Una línea por ejemplo: «Así sí || Así no». Para cambiar los títulos, empezá con «# Somos || No somos».',
+        glossary: 'Una línea por término: «Término — Definición».',
+        download: 'Una línea por archivo: «Nombre | ruta del archivo | detalle».',
         lexicon: 'Una palabra o expresión por línea.',
         pillars: 'Una línea por pilar: «Nombre | Porcentaje | Descripción».',
         contacts: 'Una línea por canal: «Canal | Dato para copiar | Nota».',
         flow: 'Una línea por paso: «Título — Texto».',
-        snippets: 'Una línea por texto: «Título — Texto para copiar».',
+        snippets: 'Una línea por texto: «Categoría | Título — Texto». Lo que va entre [corchetes] se resalta para completar.',
         brief: 'El generador toma los pilares del bloque «Pilares de contenido».',
         checklist: 'Una línea por etapa: «T-30 | un mes antes | tarea; tarea; tarea».'
       }[m.kind];
@@ -1908,7 +2159,7 @@ function renderEditor() {
   }
 
   if (tab === 'palette') {
-    host.append(h('p', { class: 'helper', text: 'El primer color define el acento de toda la interfaz. Los ejemplos de contraste y degradados usan los colores de marca.' }));
+    host.append(h('p', { class: 'helper', text: 'El color marcado como acento (Oro Extracto) se usa en filetes y detalles de toda la interfaz. Los ejemplos de contraste usan los colores de marca.' }));
     data.palette.forEach((c, i) => {
       const g = group(host, `${pad2(i + 1)} · ${c.name}`);
       const pick = h('input', { type: 'color', value: isHex(c.hex) ? c.hex.toLowerCase() : '#000000', 'aria-label': `Selector de color para ${c.name}` });

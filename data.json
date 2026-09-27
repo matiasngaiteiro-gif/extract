@@ -1,29 +1,30 @@
 {
   "brand": "Extracto Importado",
   "descriptor": "Perfumes de equivalencia",
-  "version": "1.0 · 2026",
+  "version": "2.0 · 2026",
   "heroLabel": "Manual de marca",
   "heroTitle": "La precisión de un original.",
-  "heroText": "Extracto Importado acerca las fragancias más buscadas con extractos de alta concentración. Este manual reúne cómo se ve, cómo habla y cómo trabaja la marca, para que diseño, comunidad, revendedores y proveedores comuniquen lo mismo.",
+  "heroText": "Todo lo que necesitás para conocer, vender y comunicar Extracto Importado: identidad, productos, voz de marca, textos listos y recursos gráficos. Pensado para el equipo, los revendedores y quien se suma al proyecto.",
   "heroCta": "Explorar el manual",
+  "heroImage": "media/fotos/foto-parfum-100-ambar.webp",
   "location": "Envíos a todo el país",
   "footerText": "Encontrá tu perfume.",
   "sections": [
     {
-      "id": "esencia",
-      "navLabel": "Esencia",
-      "kicker": "01 · Esencia",
-      "title": "Una fragancia, un número",
-      "lead": "Extractos de alta concentración inspirados en las fragancias más buscadas. Vendemos online, por WhatsApp e Instagram, y a través de una red de revendedores que es el canal que más unidades mueve.",
+      "id": "marca",
+      "navLabel": "Marca",
+      "kicker": "01 · Marca",
+      "title": "Quiénes somos",
+      "lead": "Lo primero que tiene que saber cualquier persona que se suma a Extracto Importado: qué vendemos, a quién le hablamos y por qué nos eligen.",
       "note": "",
-      "theme": "light",
+      "theme": "white",
       "modules": [
         {
           "id": "historia",
           "kind": "essence",
           "title": "Qué es Extracto",
-          "body": "Extracto Importado ofrece perfumes de equivalencia con la precisión de un original. Cada fragancia se identifica con un número, tiene más de 200 opciones en stock y llega a todo el país. Nos diferencia la concentración del extracto, un precio accesible y una atención que sigue después de la compra.",
-          "media": "media/mockup-frascos.webp",
+          "body": "Extracto Importado crea perfumes de equivalencia: fragancias de alta concentración inspiradas en los perfumes más buscados del mundo. Cada una se identifica con un número, hay más de 200 en stock y llegan a todo el país. Lo que nos diferencia es la concentración del extracto, un precio accesible y una atención que sigue después de la compra.",
+          "media": "media/fotos/foto-duo.webp",
           "note": "",
           "items": [
             "Precisión",
@@ -40,9 +41,23 @@
           "note": "",
           "items": [
             "+600.000 — Perfumes vendidos — En todo el país. Es nuestra prueba social principal.",
-            "+200 — Fragancias en stock — Femeninas, masculinas, unisex, body splash y discovery sets.",
-            "3 — Tamaños — 100, 50 y 30 ml, para cada tipo de compra.",
+            "+200 — Fragancias en stock — Femeninas, masculinas y unisex, más body mist.",
+            "24 h — Envío en CABA — Y de 2 a 5 días hábiles al resto del país.",
             "3 cuotas — Sin interés — Con Mercado Pago. Transferencia con descuento."
+          ]
+        },
+        {
+          "id": "eligen",
+          "kind": "cards",
+          "title": "Por qué nos eligen",
+          "body": "Los argumentos que usamos para vender, en este orden.",
+          "media": "",
+          "note": "",
+          "items": [
+            "Alta concentración — Un extracto rinde más y dura más en la piel que una colonia o un eau de toilette.",
+            "Precio accesible — La experiencia de una fragancia reconocida, a un precio que se puede repetir.",
+            "Variedad — Más de 200 fragancias para encontrar la tuya o la de quien la va a recibir.",
+            "Acompañamiento — Te ayudamos a elegir antes de comprar y seguimos disponibles después."
           ]
         },
         {
@@ -53,50 +68,141 @@
           "media": "",
           "note": "El perfil del revendedor está pendiente de definir con el equipo comercial.",
           "items": [
-            "Consumidor final — Tiene entre 25 y 35 años, mitad hombres y mitad mujeres. Busca perfumes reconocidos a un precio accesible y valora la duración.",
+            "Cliente final — Tiene entre 25 y 35 años, mitad hombres y mitad mujeres. Busca perfumes reconocidos a un precio accesible y valora la duración.",
             "Revendedor — Busca un producto que se venda solo, buen margen y un proveedor que lo acompañe con material y respuestas rápidas."
-          ]
-        },
-        {
-          "id": "objetivos",
-          "kind": "standard",
-          "title": "Objetivos del área",
-          "body": "Todo lo que se publica tiene que empujar al menos uno de estos objetivos.",
-          "media": "",
-          "note": "",
-          "items": [
-            "Más ventas",
-            "Más reconocimiento de marca",
-            "Fidelizar clientes",
-            "Sumar revendedores",
-            "Redes al día con las tendencias"
           ]
         }
       ]
     },
     {
-      "id": "marca",
-      "navLabel": "Logo",
-      "kicker": "02 · Logo",
-      "title": "Una firma con brillo propio",
-      "lead": "Una sola firma, varias configuraciones. Elegí la versión según el espacio disponible y mantené siempre sus proporciones.",
+      "id": "productos",
+      "navLabel": "Productos",
+      "kicker": "02 · Productos",
+      "title": "Nuestros productos",
+      "lead": "Qué vendemos, cómo se presenta y cómo se identifica cada fragancia. Es la información que un revendedor tiene que manejar antes de su primera venta.",
+      "note": "",
+      "theme": "light",
+      "modules": [
+        {
+          "id": "lineas",
+          "kind": "cards",
+          "title": "Líneas",
+          "body": "Dos formatos principales, con la misma calidad de fragancia.",
+          "media": "",
+          "note": "",
+          "items": [
+            "Parfum — Extracto de alta concentración en frasco de vidrio rectangular. 100, 50 y 30 ml.",
+            "Body Mist — Bruma corporal de 200 ml, más liviana, para el cuerpo y la ropa.",
+            "Discovery set — Muestras para conocer varias fragancias antes de elegir."
+          ]
+        },
+        {
+          "id": "parfum",
+          "kind": "standard",
+          "title": "Parfum",
+          "body": "Frasco de vidrio rectangular con tapa negra mate que lleva EXTRACTO grabado alrededor. La etiqueta es clara, con un marco negro fino, el logo arriba y la palabra PARFUM. El color del líquido cambia según la fragancia: del transparente al ámbar.",
+          "media": "media/fotos/foto-parfum-100-ambar.webp",
+          "note": "",
+          "items": [
+            "100 ml · 3.4 fl oz",
+            "50 ml · 1.7 fl oz",
+            "30 ml",
+            "Tapa negra mate grabada",
+            "Etiqueta con marco fino"
+          ]
+        },
+        {
+          "id": "bodymist",
+          "kind": "standard",
+          "title": "Body Mist",
+          "body": "Frasco cilíndrico transparente de 200 ml. El logo, el monograma y la palabra BODY MIST van en foil dorado. Es más liviano que el parfum: se aplica en todo el cuerpo y en la ropa, y se puede renovar durante el día.",
+          "media": "media/fotos/foto-bodymist-dorado.webp",
+          "note": "",
+          "items": [
+            "200 ml · 6.7 fl oz",
+            "Foil dorado",
+            "Monograma de la marca",
+            "Tapa negra o válvula en spray"
+          ]
+        },
+        {
+          "id": "codigos",
+          "kind": "stats",
+          "title": "Nomenclatura",
+          "body": "Cada fragancia es un número. Es la forma de pedirla, publicarla y buscarla, en cualquier canal.",
+          "media": "",
+          "note": "",
+          "items": [
+            "N100 — El código — Se escribe EXTRACTO N100, sin ceros a la izquierda.",
+            "1 a 1 — Dónde se nombra la equivalencia — En la web y en conversaciones privadas, cuando el cliente pregunta.",
+            "0 — Marcas originales en pauta — En anuncios de Meta y TikTok, solo código y notas."
+          ]
+        },
+        {
+          "id": "packaging",
+          "kind": "standard",
+          "title": "Packaging",
+          "body": "La caja es blanca, con el mismo marco negro fino de la etiqueta, el logo centrado, PARFUM y la capacidad abajo. En uno de los laterales, el logo va en vertical. Es simple a propósito: el protagonista es el frasco.",
+          "media": "media/fotos/foto-cajas.webp",
+          "note": "",
+          "items": [
+            "Caja blanca con marco fino",
+            "Logo centrado",
+            "Capacidad en ml y fl oz",
+            "Logo vertical en el lateral"
+          ]
+        },
+        {
+          "id": "cuidado",
+          "kind": "cards",
+          "title": "Cómo usarlo y cuidarlo",
+          "body": "Consejos que conviene dar en cada venta. Mejoran la experiencia y reducen consultas.",
+          "media": "",
+          "note": "",
+          "items": [
+            "Cómo aplicarlo — En puntos de pulso: muñecas, cuello y detrás de las orejas. Sin frotar, para no romper las notas.",
+            "Cuánto dura — Depende de la fragancia, de la piel y del clima. Los amaderados y los dulces suelen durar más que los cítricos.",
+            "Cómo guardarlo — Lejos del sol, del calor y de la humedad, con la tapa puesta. El baño no es el mejor lugar.",
+            "Parfum y body mist — El parfum va en pocos puntos; el body mist en cuerpo y ropa. Se pueden combinar."
+          ]
+        },
+        {
+          "id": "catalogo",
+          "kind": "download",
+          "title": "Catálogo y fotos",
+          "body": "El catálogo reúne todos los códigos, familias y presentaciones. Descargalo antes de responder consultas.",
+          "media": "",
+          "note": "El catálogo se actualiza cada mes. Si el botón dice «Pendiente de carga», pedilo al equipo de marketing.",
+          "items": [
+            "Catálogo de fragancias | media/descargas/extracto-catalogo.pdf | PDF con todos los códigos y presentaciones",
+            "Fotos de producto | media/descargas/extracto-fotos-producto.zip | 12 fotos en alta para redes y catálogos"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "identidad",
+      "navLabel": "Identidad",
+      "kicker": "03 · Identidad",
+      "title": "Identidad visual",
+      "lead": "Blanco como base, negro para leer y un toque de oro para destacar. Así se ve la marca en el frasco, en la caja y en cada pieza.",
       "note": "",
       "theme": "white",
       "modules": [
         {
           "id": "logo",
           "kind": "logo",
-          "title": "Sistema de logos",
-          "body": "EXTRACTO, en mayúsculas espaciadas, es la palabra principal. IMPORTADO la acompaña en una línea más fina, entre dos filetes dorados que se afinan hacia afuera. El selector reúne las versiones principal, vertical, compacta, logotipo e isotipo. Sobre claro va en negro con filetes dorados; sobre negro, en blanco con filetes dorados; sobre oro, en negro monocromático.",
+          "title": "Logo",
+          "body": "EXTRACTO, en mayúsculas espaciadas, es la palabra principal. IMPORTADO la acompaña en una línea más fina, entre dos filetes dorados que se afinan hacia afuera. El monograma, una E espejada junto a una E, es el isotipo que aparece en el body mist. Elegí la versión según el espacio disponible.",
           "media": "",
-          "note": "El logo principal es el archivo oficial. El isotipo (la E dentro de una etiqueta) y las versiones vertical y compacta son una propuesta construida con la E del logo.",
+          "note": "El logo principal es el archivo oficial. Las versiones vertical y compacta combinan el logo con el monograma del body mist.",
           "items": []
         },
         {
           "id": "proteccion",
           "kind": "clearspace",
           "title": "Espacio de protección",
-          "body": "Dejá libre alrededor del logo, como mínimo, el alto de la letra E. Textos, bordes y fotos con mucho detalle no deben invadir esa zona. Tamaño mínimo: 120 px de ancho en digital y 30 mm en impreso; por debajo, usá el logotipo o el isotipo.",
+          "body": "Dejá libre alrededor del logo, como mínimo, el alto de la letra E. Tamaño mínimo: 120 px de ancho en digital y 30 mm en impreso; por debajo, usá el logotipo o el monograma.",
           "media": "",
           "note": "",
           "items": []
@@ -119,45 +225,34 @@
             "Expandir",
             "Rotar"
           ]
-        }
-      ]
-    },
-    {
-      "id": "color",
-      "navLabel": "Color",
-      "kicker": "03 · Color",
-      "title": "Neutros con un solo acento",
-      "lead": "La marca vive en blanco y negro. El producto y la fotografía ponen el color; el dorado de los filetes del logo aparece solo para destacar.",
-      "note": "",
-      "theme": "light",
-      "modules": [
+        },
         {
           "id": "paleta",
           "kind": "palette",
           "title": "Paleta",
-          "body": "Negro y blancos son la base de todas las piezas. El dorado sale de los filetes del logo y recuerda el color del extracto dentro del frasco: se usa para un código, un precio o un botón. Tocá un color para copiar su código.",
+          "body": "El blanco es la base de todas las piezas, como la caja y la etiqueta. El negro es para leer. El oro sale de los filetes del logo y del foil del body mist: se usa solo para acentos, nunca como fondo. Tocá un color para copiar su código.",
           "media": "",
-          "note": "El dorado se tomó del archivo del logo. Para imprenta, confirmar el Pantone con la diseñadora.",
+          "note": "Para imprenta, confirmar el Pantone del dorado con la diseñadora.",
           "items": []
         },
         {
           "id": "proporcion",
           "kind": "stats",
           "title": "Cuánto de cada color",
-          "body": "Una guía rápida para que ninguna pieza se vuelva dorada o gris.",
+          "body": "Una guía rápida para mantener la estética limpia.",
           "media": "",
           "note": "",
           "items": [
-            "70% — Neutros — Fondos blancos, niebla, grafito y negro.",
-            "25% — Fotografía — El frasco, la piel, los ingredientes.",
-            "5% — Dorado — Un código, un precio o un botón."
+            "75% — Blanco y niebla — Fondos, cajas, etiquetas y aire.",
+            "20% — Negro y grafito — Textos, marcos finos y tapas.",
+            "5% — Oro — Filetes, un código o un detalle. Nada más."
           ]
         },
         {
           "id": "tonos",
           "kind": "tints",
           "title": "Tonos y matices",
-          "body": "Para fondos, estados e ilustraciones, mezclá los colores de marca con blanco o con negro. Elegí el color base y la intensidad, y copiá el código.",
+          "body": "Para fondos suaves y estados, mezclá los colores de marca con blanco o con negro. Elegí el color base y la intensidad, y copiá el código.",
           "media": "",
           "note": "",
           "items": []
@@ -166,27 +261,16 @@
           "id": "combinaciones",
           "kind": "contrast",
           "title": "Contraste y jerarquía",
-          "body": "Cuatro fondos posibles con su combinación de textos. El comparador calcula el contraste de cada color sobre el fondo.",
+          "body": "Tres fondos posibles con su combinación de textos. El comparador calcula el contraste de cada color sobre el fondo.",
           "media": "",
           "note": "",
           "items": [
             "Perfumes de equivalencia",
-            "La precisión de un original.",
+            "La precisión de un original",
             "Extractos de alta concentración inspirados en las fragancias más buscadas.",
             "Envíos a todo el país"
           ]
-        }
-      ]
-    },
-    {
-      "id": "tipografia",
-      "navLabel": "Tipografía",
-      "kicker": "04 · Tipografía",
-      "title": "Una sola familia, varios pesos",
-      "lead": "Gotham es la tipografía de la marca: la misma voz geométrica de IMPORTADO en el logo. Light para titulares, Book para leer y Medium para etiquetas y botones.",
-      "note": "",
-      "theme": "white",
-      "modules": [
+        },
         {
           "id": "tipo-logo",
           "kind": "type-logo",
@@ -200,7 +284,7 @@
           "id": "tipo-display",
           "kind": "type-display",
           "title": "Gotham",
-          "body": "Tres pesos resuelven casi todo: Light para titulares y frases de campaña, Medium para etiquetas y códigos, Bold para precios y destacados. Las etiquetas van en mayúsculas espaciadas, como IMPORTADO.",
+          "body": "Gotham es la tipografía de la marca: la misma voz geométrica de IMPORTADO en el logo. Light para titulares en mayúsculas espaciadas, Medium para etiquetas y códigos, Bold solo para precios.",
           "media": "",
           "note": "",
           "items": []
@@ -211,156 +295,427 @@
           "title": "Gotham en textos",
           "body": "Book para párrafos, descripciones de fragancias y respuestas. Entre 15 y 17 px en pantalla, con buen interlineado.",
           "media": "",
-          "note": "Si Gotham no está instalada (por ejemplo, en una computadora de un revendedor), usar Montserrat como reemplazo.",
+          "note": "Si Gotham no está instalada, usá Montserrat como reemplazo.",
           "items": []
         },
         {
           "id": "jerarquia",
           "kind": "type-scale",
           "title": "Jerarquía",
-          "body": "Cinco niveles para ordenar cualquier pieza, de la historia de Instagram al catálogo.",
+          "body": "Cinco niveles para ordenar cualquier pieza, de una historia al catálogo.",
           "media": "",
           "note": "",
           "items": [
-            "H1 · Gotham Light — La precisión de un original",
-            "H2 · Gotham Light — Hay aromas que tienen nombre",
-            "H3 · Gotham Medium — Notas de salida, corazón y fondo",
+            "Título · Gotham Light, mayúsculas — La precisión de un original",
+            "Subtítulo · Gotham Light, mayúsculas — Hay aromas que tienen nombre",
+            "Etiqueta · Gotham Medium, mayúsculas espaciadas — Notas de salida, corazón y fondo",
             "Destacado · Gotham Medium — EXTRACTO N100 · 100 ml · $45.000",
             "Párrafo · Gotham Book — Extractos de alta concentración inspirados en las fragancias más buscadas. Envíos a todo el país."
           ]
+        },
+        {
+          "id": "patrones",
+          "kind": "patterns",
+          "title": "Recursos gráficos",
+          "body": "Dos tramas hechas con el monograma, para fondos de historias, papel de regalo y papelería. Siempre sutiles: sobre blanco o niebla, nunca sobre una foto.",
+          "media": "",
+          "note": "",
+          "items": [
+            "Trama de monogramas",
+            "Ritmo alternado"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fotografia",
+      "navLabel": "Fotografía",
+      "kicker": "04 · Fotografía",
+      "title": "Fotografía de producto",
+      "lead": "Las fotos oficiales de Extracto. Se pueden usar en redes, catálogos y piezas de revendedores, y como fondo en las plantillas del kit.",
+      "note": "",
+      "theme": "light",
+      "modules": [
+        {
+          "id": "criterios",
+          "kind": "cards",
+          "title": "Cómo fotografiamos",
+          "body": "Las fotos oficiales siguen un mismo criterio. Si producís fotos propias, respetalo para que todo se vea de la misma marca.",
+          "media": "",
+          "note": "Las fotos en alta resolución están en el kit de descargas.",
+          "items": [
+            "Fondo blanco — Fondo liso y claro, sin texturas ni objetos que distraigan.",
+            "Luz suave — Luz difusa desde arriba y de frente, sin sombras duras ni reflejos quemados.",
+            "Pedestal de acrílico — Los frascos se apoyan sobre bases transparentes, a distintas alturas.",
+            "Etiqueta de frente — La etiqueta siempre derecha y legible.",
+            "El color del líquido — Es lo único que pone color. Aprovechalo para armar composiciones.",
+            "Sin marcas ajenas — Nunca frascos ni nombres de las marcas originales en la misma foto."
+          ]
+        },
+        {
+          "id": "ft-cajas",
+          "kind": "showcase",
+          "title": "Cajas y frascos",
+          "body": "Parfum de 100 ml con sus cajas. Ideal para portadas y lanzamientos.",
+          "media": "media/fotos/foto-cajas.webp",
+          "note": "",
+          "items": [],
+          "category": "Composición"
+        },
+        {
+          "id": "ft-bodymist-linea",
+          "kind": "showcase",
+          "title": "Línea Body Mist",
+          "body": "Toda la línea en fila, con alturas distintas sobre acrílico.",
+          "media": "media/fotos/foto-bodymist-linea.webp",
+          "note": "",
+          "items": [],
+          "category": "Body Mist"
+        },
+        {
+          "id": "ft-parfum-100-ambar",
+          "kind": "showcase",
+          "title": "Parfum 100 ml ámbar",
+          "body": "Frasco con tapa sobre pedestal de acrílico.",
+          "media": "media/fotos/foto-parfum-100-ambar.webp",
+          "note": "",
+          "items": [],
+          "category": "Parfum"
+        },
+        {
+          "id": "ft-parfum-100-spray",
+          "kind": "showcase",
+          "title": "Parfum 100 ml con válvula",
+          "body": "Sin tapa, para mostrar el spray.",
+          "media": "media/fotos/foto-parfum-100-spray.webp",
+          "note": "",
+          "items": [],
+          "category": "Parfum"
+        },
+        {
+          "id": "ft-parfum-50-ambar",
+          "kind": "showcase",
+          "title": "Parfum 50 ml ámbar",
+          "body": "El formato mediano, con el mismo lenguaje.",
+          "media": "media/fotos/foto-parfum-50-ambar.webp",
+          "note": "",
+          "items": [],
+          "category": "Parfum"
+        },
+        {
+          "id": "ft-parfum-50-claro",
+          "kind": "showcase",
+          "title": "Parfum 50 ml claro",
+          "body": "Fragancia de tono claro sobre pedestal.",
+          "media": "media/fotos/foto-parfum-50-claro.webp",
+          "note": "",
+          "items": [],
+          "category": "Parfum"
+        },
+        {
+          "id": "ft-duo",
+          "kind": "showcase",
+          "title": "Dúo de parfum",
+          "body": "Dos frascos a distinta altura. Sirve para comparar o regalar.",
+          "media": "media/fotos/foto-duo.webp",
+          "note": "",
+          "items": [],
+          "category": "Composición"
+        },
+        {
+          "id": "ft-pila",
+          "kind": "showcase",
+          "title": "Pila de frascos",
+          "body": "Frascos apilados que muestran el color de cada fragancia.",
+          "media": "media/fotos/foto-pila.webp",
+          "note": "",
+          "items": [],
+          "category": "Composición"
+        },
+        {
+          "id": "ft-pila-tapa",
+          "kind": "showcase",
+          "title": "Pila con tapa grabada",
+          "body": "Muestra el detalle de la tapa con EXTRACTO grabado.",
+          "media": "media/fotos/foto-pila-tapa.webp",
+          "note": "",
+          "items": [],
+          "category": "Composición"
+        },
+        {
+          "id": "ft-bodymist-dorado",
+          "kind": "showcase",
+          "title": "Body Mist dorado",
+          "body": "Frasco de 200 ml con foil dorado.",
+          "media": "media/fotos/foto-bodymist-dorado.webp",
+          "note": "",
+          "items": [],
+          "category": "Body Mist"
+        },
+        {
+          "id": "ft-bodymist-cristal",
+          "kind": "showcase",
+          "title": "Body Mist transparente",
+          "body": "Versión de líquido claro, con tapa.",
+          "media": "media/fotos/foto-bodymist-cristal.webp",
+          "note": "",
+          "items": [],
+          "category": "Body Mist"
+        },
+        {
+          "id": "ft-bodymist-spray",
+          "kind": "showcase",
+          "title": "Body Mist con válvula",
+          "body": "Sin tapa, para mostrar el spray.",
+          "media": "media/fotos/foto-bodymist-spray.webp",
+          "note": "",
+          "items": [],
+          "category": "Body Mist"
         }
       ]
     },
     {
       "id": "voz",
       "navLabel": "Voz",
-      "kicker": "05 · Voz y contenido",
+      "kicker": "05 · Voz",
       "title": "Cómo hablamos",
-      "lead": "Premium y con el lenguaje de la perfumería, sin exagerar. Hablamos de vos, con seguridad y sin gritar. Somos más accesibles que el original y no lo escondemos, pero lo que vendemos es la fragancia.",
+      "lead": "Premium y con el lenguaje de la perfumería, sin exagerar. Hablamos de vos, con seguridad y sin gritar. Somos más accesibles que el original y no lo escondemos: lo que vendemos es la fragancia.",
       "note": "",
-      "theme": "dark",
+      "theme": "white",
       "modules": [
         {
           "id": "principios",
           "kind": "cards",
-          "title": "Tres principios",
-          "body": "Antes de publicar, el texto tiene que pasar estas tres pruebas.",
+          "title": "Cuatro principios",
+          "body": "Antes de publicar o responder, el texto tiene que pasar estas cuatro pruebas.",
           "media": "",
           "note": "",
           "items": [
             "Preciso — Nombramos notas, familias y concentración. Un dato concreto vende más que un adjetivo.",
             "Cercano — Voseo y frases cortas, como alguien que sabe de perfumes y te recomienda uno.",
-            "Sobrio — Sin signos repetidos ni superlativos. Máximo un emoji por texto, y solo en redes."
+            "Sobrio — Sin signos repetidos ni superlativos. Máximo un emoji por texto, y solo en redes.",
+            "Honesto — Decimos que es un perfume de equivalencia. Nunca prometemos que es el original."
+          ]
+        },
+        {
+          "id": "personalidad",
+          "kind": "tone",
+          "title": "Nuestra personalidad",
+          "body": "Cómo queremos que nos perciban, y cómo no.",
+          "media": "",
+          "note": "",
+          "items": [
+            "# Somos || No somos",
+            "Expertos que recomiendan || Vendedores que presionan",
+            "Elegantes y simples || Recargados o exagerados",
+            "Cercanos: hablamos de vos || Formales o distantes",
+            "Claros con lo que vendemos || Ambiguos sobre qué es un perfume de equivalencia"
+          ]
+        },
+        {
+          "id": "describir",
+          "kind": "flow",
+          "title": "Cómo describir una fragancia",
+          "body": "Cinco pasos para presentar cualquier perfume, en un post, una historia o una respuesta.",
+          "media": "",
+          "note": "Ejemplo: Gourmand floral. Pera, iris y praliné. Dulce, cálido y persistente. Ideal para la noche. EXTRACTO N100 · 100 ml.",
+          "items": [
+            "Familia — Empezá por la familia: floral, gourmand, amaderado, cítrico.",
+            "Notas — Nombrá una nota de salida, una de corazón y una de fondo.",
+            "Sensación — Una o dos palabras: dulce, fresco, intenso, elegante.",
+            "Momento — Cuándo usarlo: día o noche, verano o invierno, oficina o salida.",
+            "Código — Cerrá con el código y el tamaño: EXTRACTO N100 · 100 ml."
           ]
         },
         {
           "id": "tono",
           "kind": "tone",
           "title": "Así sí, así no",
-          "body": "Ejemplos reales para comparar. Sirven para textos de redes, anuncios, WhatsApp y web.",
+          "body": "Ejemplos para comparar. Sirven para redes, anuncios, WhatsApp y web.",
           "media": "",
           "note": "",
           "items": [
             "N100: pera, iris y praliné. Dulce, cálido y persistente. || ¡¡¡El más rico del mundo!!! Igualito, nadie se va a dar cuenta 🔥🔥",
             "Llega en 24 h hábiles en CABA y en 3 a 5 días al interior. || Envíos rapidísimos a todos lados.",
             "Uno para ella, uno para vos. Llevando dos, pagás menos. || MEGA PROMO IMPERDIBLE, CORRÉ QUE SE TERMINA.",
-            "Perfume de equivalencia de alta concentración. || Réplica, copia, imitación."
+            "¿Buscás algo fresco o más intenso? || ¿Qué querés?",
+            "Tiene muy buena fijación en la piel. || Dura 48 horas garantizado.",
+            "Tenemos más de 200 fragancias en stock. || Tenemos todos los perfumes del mundo."
           ]
         },
         {
-          "id": "lexico",
-          "kind": "lexicon",
-          "title": "Vocabulario de la casa",
-          "body": "Palabras que usamos para describir una fragancia.",
+          "id": "palabras",
+          "kind": "tone",
+          "title": "Palabras que usamos",
+          "body": "El vocabulario también construye marca.",
           "media": "",
           "note": "",
           "items": [
-            "notas de salida",
-            "corazón",
-            "fondo",
-            "estela",
-            "fijación",
-            "familia olfativa",
-            "amaderado",
-            "ambarado",
-            "floral",
-            "cítrico",
-            "gourmand",
-            "aromático",
-            "alta concentración",
-            "equivalencia",
-            "tu firma"
+            "# Decimos || Evitamos",
+            "Perfume de equivalencia || Réplica, copia, imitación, trucho",
+            "Inspirado en || Igual a, idéntico",
+            "Fragancia, aroma || Olor",
+            "Alta concentración || Dura para siempre",
+            "Llevando dos, tenés descuento || Regalado, re barato"
           ]
         },
         {
-          "id": "pilares",
-          "kind": "pillars",
-          "title": "Pilares de contenido",
-          "body": "Cómo se reparte lo que publicamos en el mes. Sirve para armar el calendario y para revisar si nos estamos desbalanceando. TikTok abre en noviembre con 3 publicaciones por semana.",
+          "id": "familias",
+          "kind": "cards",
+          "title": "Familias olfativas",
+          "body": "Las seis familias que más vendemos. Sirven para recomendar según gustos y ocasión.",
           "media": "",
           "note": "",
           "items": [
-            "La fragancia | 30 | Notas, ocasiones de uso, el frasco",
-            "Cultura olfativa | 20 | Familias, cómo aplicar, cómo elegir",
-            "Prueba social | 20 | Reseñas, clientes, los +600.000",
-            "Vende Extracto | 15 | Captar y mostrar revendedores",
-            "Tendencias | 15 | Formatos y audios del momento"
+            "Floral — Rosa, jazmín, azahar. Romántica y luminosa. Para el día y ocasiones especiales.",
+            "Gourmand — Vainilla, caramelo, praliné. Dulce y envolvente. Ideal para la noche y el invierno.",
+            "Ambarado — Ámbar, especias, resinas. Cálido e intenso. Para la noche.",
+            "Amaderado — Sándalo, cedro, vetiver. Elegante y persistente. Todo el año.",
+            "Cítrico — Limón, bergamota, pomelo. Fresco y liviano. Para el día y el verano.",
+            "Aromático — Lavanda, romero, menta. Limpio y energizante. Para el día y la oficina."
           ]
         },
         {
-          "id": "textos",
-          "kind": "snippets",
-          "title": "Textos listos para copiar",
-          "body": "Respuestas y textos base para redes y WhatsApp. Adaptalos al caso sin cambiar los datos.",
+          "id": "glosario",
+          "kind": "glossary",
+          "title": "Glosario de perfumería",
+          "body": "Los términos que aparecen en consultas, descripciones y reseñas. Buscá uno o recorrelos todos.",
           "media": "",
           "note": "",
           "items": [
-            "Bio de Instagram — Perfumes de equivalencia con la precisión de un original. +600.000 vendidos · Envíos a todo el país · Revendé Extracto 👇",
-            "¿Cuánto tarda el envío? — ¡Hola! En CABA llega en 24 h hábiles por moto. En GBA, de 2 a 3 días hábiles, y al interior, de 3 a 5 días hábiles por OCA. Te pasamos el seguimiento apenas sale.",
-            "¿Cómo puedo pagar? — Podés pagar con Mercado Pago, con débito o crédito hasta en 3 cuotas sin interés, o por transferencia con un descuento especial.",
-            "¿Cuánto dura? — Son extractos de alta concentración, por eso tienen buena fijación en la piel. La duración depende de cada fragancia y de tu piel. Si querés, te recomiendo las que más duran según lo que te guste.",
-            "Quiero revender — ¡Genial! Tenemos precios especiales para revendedores, +200 fragancias en stock y te acompañamos con soporte y material para vender. Te paso con la línea de revendedores para contarte cómo empezar.",
-            "Posventa, día 3 — ¡Hola! ¿Ya te llegó tu Extracto? Queríamos saber qué te pareció. Si tenés cualquier duda, escribinos por acá."
+            "Parfum o extracto — La concentración más alta de esencia. Rinde más y dura más en la piel.",
+            "Eau de parfum — Concentración media alta. Buena duración, un poco más liviana que el parfum.",
+            "Eau de toilette — Concentración más baja. Más fresca y de menor duración.",
+            "Body mist — Bruma corporal liviana para el cuerpo y la ropa. Se renueva durante el día.",
+            "Perfume de equivalencia — Fragancia inspirada en un perfume conocido, elaborada por otra marca. No es el producto original.",
+            "Notas de salida — Lo primero que se siente al aplicar. Duran unos minutos: cítricos, frutas, hierbas.",
+            "Notas de corazón — Aparecen cuando se van las de salida y le dan carácter al perfume: flores, especias.",
+            "Notas de fondo — Las que quedan en la piel durante horas: maderas, vainilla, ámbar, almizcle.",
+            "Familia olfativa — El grupo al que pertenece una fragancia según sus notas principales.",
+            "Fijación — Cuánto tiempo se mantiene el perfume en la piel.",
+            "Estela — El rastro de aroma que deja una persona al pasar.",
+            "Proyección — Qué tan lejos de la piel se percibe la fragancia.",
+            "Gourmand — Notas que recuerdan a postres: vainilla, caramelo, praliné, café.",
+            "Amaderado — Notas de maderas, como sándalo, cedro o vetiver.",
+            "Ambarado — Cálido y envolvente: ámbar, especias, resinas y vainilla.",
+            "Almizcle — Nota de fondo suave que deja sensación de piel limpia.",
+            "Fougère — Familia clásica masculina: lavanda, geranio y musgo.",
+            "Chipre — Contraste de cítricos frescos con musgo y maderas.",
+            "Unisex — Fragancia pensada para cualquier persona."
+          ]
+        },
+        {
+          "id": "reglas",
+          "kind": "cards",
+          "title": "Reglas de formato",
+          "body": "Detalles que hacen que todo se vea de la misma marca.",
+          "media": "",
+          "note": "",
+          "items": [
+            "Anuncios pagos — En Meta y TikTok nunca nombramos marcas originales: solo código y notas.",
+            "Precios — Con el formato $45.000 y aclarando la presentación. Confirmá el precio vigente antes de publicar.",
+            "Emojis — Uno por texto como máximo, y solo en redes o WhatsApp. Nunca en títulos.",
+            "Hashtags — Entre 3 y 5: #ExtractoImportado #PerfumesDeEquivalencia #Perfumes #Fragancias.",
+            "Mayúsculas — Solo en títulos cortos, etiquetas y códigos. Nunca un texto entero para gritar.",
+            "Nombre de marca — Extracto Importado, o Extracto en textos breves."
           ]
         }
       ]
     },
     {
-      "id": "producto",
-      "navLabel": "Producto",
-      "kicker": "06 · Producto",
-      "title": "Catálogo, canales y revendedores",
-      "lead": "La información que todo el equipo tiene que dar igual, en cualquier canal.",
+      "id": "textos",
+      "navLabel": "Textos",
+      "kicker": "06 · Textos",
+      "title": "Textos listos para copiar",
+      "lead": "Respuestas y textos base para revendedores, community managers y cualquier persona que empieza a vender. Filtrá por situación, copiá y reemplazá lo que está entre corchetes.",
       "note": "",
       "theme": "light",
       "modules": [
         {
-          "id": "catalogo",
-          "kind": "catalog",
-          "title": "Best sellers",
-          "body": "El precio de referencia de los más vendidos es $45.000 (septiembre de 2026). Activá la vista para anuncios pagos para ver cómo se comunican en Meta y TikTok: solo código y notas, sin la marca original.",
-          "media": "",
-          "note": "En el sitio se muestra «Equivalente a [marca]», pendiente de revisión legal. En historias orgánicas se nombra de forma ocasional.",
-          "items": [
-            "Código | Línea | Equivalencia | Referencia",
-            "N100 | Femenino | La Vida es Bella | $45.000",
-            "N148 | Masculino | Sauvage | $45.000",
-            "N194 | Unisex | Erba Pura | $45.000",
-            "N36 | Femenino | Black Opium | $45.000",
-            "N88 | Masculino | Invictus | $45.000"
-          ]
-        },
-        {
-          "id": "nomenclatura",
-          "kind": "stats",
-          "title": "Nomenclatura y presentaciones",
-          "body": "Cada fragancia es un número. Se escribe EXTRACTO N100, N148, etc., sin ceros a la izquierda. El número es la identidad del producto en piezas, anuncios, etiquetas y conversaciones.",
+          "id": "uso",
+          "kind": "flow",
+          "title": "Cómo usarlos",
+          "body": "Son textos base: sirven igual en WhatsApp, Instagram o TikTok.",
           "media": "",
           "note": "",
           "items": [
-            "100 ml — Frasco principal — El formato de referencia de precios.",
-            "50 ml — Formato medio — Para regalar o combinar.",
-            "30 ml — Para probar — Ideal para revendedores y discovery."
+            "Elegí — Filtrá por la situación en la que estás.",
+            "Copiá — Un toque en Copiar y queda listo para pegar.",
+            "Completá — Reemplazá lo que está entre [corchetes]: nombre, código, precio.",
+            "Revisá — Confirmá precio y stock vigentes antes de enviar.",
+            "Enviá — Si el cliente responde, seguí con el texto de la etapa siguiente."
+          ]
+        },
+        {
+          "id": "biblioteca",
+          "kind": "snippets",
+          "title": "Biblioteca de textos",
+          "body": "36 textos ordenados por etapa de la venta y por canal.",
+          "media": "",
+          "note": "",
+          "items": [
+            "Primer contacto | Saludo inicial — ¡Hola, [nombre]! Gracias por escribirnos. Soy [tu nombre], de Extracto Importado. ¿Buscás un perfume para vos o para regalar? Contame qué fragancias te gustan y te recomiendo la ideal.",
+            "Primer contacto | No sabe qué elegir — ¡Te ayudo! Decime tres cosas: si te gustan los aromas dulces, frescos o intensos; si es para el día o la noche, y algún perfume que te haya gustado. Con eso te paso dos o tres opciones.",
+            "Primer contacto | Es para regalo — ¡Qué lindo regalo! ¿Me contás cómo es la persona? Con saber si prefiere algo dulce, fresco o intenso, y si lo usaría de día o de noche, te recomiendo la fragancia ideal.",
+            "Consultas | Precio — El EXTRACTO [código] de 100 ml está $[precio]. Podés pagarlo con Mercado Pago hasta en 3 cuotas sin interés o por transferencia con descuento. ¿Te lo reservo?",
+            "Consultas | Envíos — En CABA llega en 24 h hábiles por moto. En GBA, de 2 a 3 días hábiles, y al interior, de 3 a 5 días hábiles por OCA. Te pasamos el seguimiento apenas sale.",
+            "Consultas | Medios de pago — Aceptamos todos los medios de pago: Mercado Pago con débito o crédito, hasta en 3 cuotas sin interés, y transferencia bancaria con un descuento especial.",
+            "Consultas | Tamaños — El Parfum viene en 100, 50 y 30 ml, y el Body Mist en 200 ml. Si es la primera vez que probás una fragancia, el de 30 ml es ideal para conocerla.",
+            "Consultas | Duración — Son extractos de alta concentración, por eso tienen muy buena fijación. La duración depende de la fragancia y de tu piel: los amaderados y los dulces suelen durar más que los cítricos.",
+            "Objeciones | ¿Es original? — Es un perfume de equivalencia: una fragancia inspirada en la original, elaborada con extracto de alta concentración. No es el producto de la marca original, y por eso tiene otro precio.",
+            "Objeciones | Me parece caro — Te entiendo. Pensá que es un extracto de alta concentración: con dos o tres aplicaciones te acompaña todo el día. Además, llevando dos tenés descuento y podés pagar en 3 cuotas sin interés.",
+            "Objeciones | ¿Y si no me gusta? — Si tenés dudas, te recomiendo empezar por el tamaño de 30 ml para conocer la fragancia. Y ante cualquier inconveniente con tu pedido, el equipo de posventa te ayuda.",
+            "Objeciones | No conozco la marca — Es normal. Te cuento: vendimos más de 600.000 perfumes en todo el país. Si querés, te paso reseñas de clientes y la descripción de las notas antes de que decidas.",
+            "Cierre | Confirmar pedido — ¡Genial! Te confirmo tu pedido: [producto y código], [cantidad] unidad/es, total $[precio]. Pasame nombre completo, dirección y código postal para el envío.",
+            "Cierre | Datos de pago — Podés pagar por este link de Mercado Pago: [link]. Si preferís transferencia, te paso los datos y tenés un descuento especial. Cuando lo tengas, mandame el comprobante por acá.",
+            "Cierre | Pedido despachado — ¡Tu pedido ya salió! Este es el número de seguimiento: [número]. Cualquier duda, escribinos por acá.",
+            "Posventa | Día 3 · ¿Llegó bien? — ¡Hola, [nombre]! ¿Ya te llegó tu Extracto? Queríamos saber qué te pareció. Si tenés cualquier duda, escribinos por acá.",
+            "Posventa | Día 21 · Reseña — ¡Hola, [nombre]! ¿Cómo te está yendo con el [código]? Si te gustó, nos ayudaría mucho que nos cuentes tu experiencia. ¡Gracias por elegirnos!",
+            "Posventa | Día 45 · Recompra — ¡Hola, [nombre]! Si ya estás por terminar tu [código] o querés probar otra fragancia, te cuento las novedades del mes. Llevando dos, tenés descuento.",
+            "Revendedores | Presentación del revendedor — ¡Hola! Soy [tu nombre] y vendo Extracto Importado: perfumes de equivalencia de alta concentración, con más de 200 fragancias. ¿Qué aromas te gustan? Te ayudo a elegir.",
+            "Revendedores | Chequear stock — ¡Buenísimo! Antes de confirmarte, chequeo el stock y el precio actualizado del [código]. Te respondo en un rato.",
+            "Revendedores | Captar revendedores — ¿Querés generar ingresos extra? Sumate a Vende Extracto: precios especiales, más de 200 fragancias en stock y te acompañamos con soporte y material para vender. Escribinos y te contamos cómo empezar.",
+            "Revendedores | Respuesta a un interesado — ¡Qué bueno que quieras sumarte! Te paso con la línea de revendedores, donde te cuentan las condiciones, la lista de precios y cómo hacer tu primer pedido.",
+            "Redes: publicaciones | Fragancia — EXTRACTO [código]. Notas de [salida], [corazón] y [fondo]. [Dulce, fresco o intenso] y persistente. 100 ml · Envíos a todo el país. Pedilo por WhatsApp o en extractoimportado.com.ar",
+            "Redes: publicaciones | Promo — Uno para vos, uno para regalar. Llevando dos, pagás menos. Todos los medios de pago y 3 cuotas sin interés. Envíos a todo el país.",
+            "Redes: publicaciones | Prueba social — Más de 600.000 perfumes vendidos en todo el país. Gracias por elegirnos. ¿Cuál es tu Extracto favorito? Contanos en los comentarios.",
+            "Redes: publicaciones | Body Mist — BODY MIST · 200 ml. Una bruma liviana para el cuerpo y la ropa, ideal para renovar tu fragancia durante el día.",
+            "Redes: publicaciones | Cultura olfativa — ¿Sabías que un perfume tiene tres momentos? Las notas de salida se sienten primero, las de corazón aparecen a los minutos y las de fondo son las que quedan. Por eso conviene probarlo en la piel y esperar.",
+            "Redes: historias | Encuesta — ¿Dulce o fresco? Votá y te recomendamos tu próximo Extracto.",
+            "Redes: historias | Caja de preguntas — Contanos qué perfume te gustaría que tengamos. Te leemos.",
+            "Redes: historias | Vuelve un código — Volvió el [código]. Stock limitado. Escribinos por WhatsApp para reservar el tuyo.",
+            "Estados de WhatsApp | Llegó stock — Llegaron los más pedidos: [códigos]. Consultame por el tuyo.",
+            "Estados de WhatsApp | Envíos — Envíos a todo el país con seguimiento. Pedí hoy y despacho [día].",
+            "Estados de WhatsApp | Promo del mes — Llevando dos, pagás menos. Consultame por la promo del mes.",
+            "Perfiles | Bio de Instagram — Perfumes de equivalencia con la precisión de un original. +600.000 vendidos · Envíos a todo el país · Revendé Extracto 👇",
+            "Perfiles | Bio de revendedor — Revendedor de Extracto Importado · Perfumes de equivalencia de alta concentración · Envíos a todo el país · Pedidos por WhatsApp",
+            "Perfiles | Mensaje de ausencia — ¡Gracias por escribirnos! En este momento no podemos responder. Te contestamos apenas volvamos. Mientras tanto, podés ver las fragancias en extractoimportado.com.ar"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ventas",
+      "navLabel": "Ventas",
+      "kicker": "07 · Ventas",
+      "title": "Venta y atención",
+      "lead": "Canales, envíos, pagos y el recorrido de una venta. Es la información que todos tienen que dar igual, en cualquier canal.",
+      "note": "",
+      "theme": "white",
+      "modules": [
+        {
+          "id": "recorrido",
+          "kind": "flow",
+          "title": "De la consulta a la posventa",
+          "body": "Las cinco etapas de una venta. En la sección Textos hay un texto listo para cada una.",
+          "media": "",
+          "note": "",
+          "items": [
+            "Consulta — Respondé rápido y preguntá qué aromas le gustan.",
+            "Recomendación — Ofrecé dos o tres códigos con su familia y sus notas.",
+            "Cierre — Confirmá producto, precio, medio de pago y datos de envío.",
+            "Envío — Pasá el número de seguimiento apenas sale el pedido.",
+            "Posventa — Escribí a los 3, 21 y 45 días: cómo llegó, reseña y recompra."
           ]
         },
         {
@@ -373,7 +728,7 @@
           "items": [
             "Web | extractoimportado.com.ar | Tienda online",
             "Instagram | @extractoimportado | Canal principal de contenido",
-            "TikTok | @extractoimportado | Apertura activa en noviembre",
+            "TikTok | @extractoimportado | Contenido corto y tendencias",
             "WhatsApp | +54 9 11 4492 4153 | Ventas y posventa",
             "Revendedores | vendeextracto.com.ar | Vende Extracto"
           ]
@@ -382,7 +737,7 @@
           "id": "envios",
           "kind": "table",
           "title": "Envíos",
-          "body": "Con seguimiento del pedido. En fechas de mucha demanda (Cyber, Black Friday, Navidad) los plazos pueden extenderse: avisarlo siempre en las piezas de esas campañas.",
+          "body": "Con seguimiento del pedido. En fechas de mucha demanda (Cyber, Black Friday, Navidad) los plazos pueden extenderse: avisalo siempre en las piezas de esas campañas.",
           "media": "",
           "note": "",
           "items": [
@@ -404,264 +759,110 @@
             "Consultas — Por WhatsApp, Instagram y TikTok, con dos líneas según el tipo de cliente: consumidor final y revendedor.",
             "Cambios y devoluciones — Se resuelven por mail o por el WhatsApp de soporte, según las políticas vigentes."
           ]
-        },
-        {
-          "id": "vende",
-          "kind": "cards",
-          "title": "Vende Extracto",
-          "body": "Crecé con nosotros. La red de revendedores es el canal principal: se comunica como una oportunidad de negocio acompañada, no como un producto más.",
-          "media": "",
-          "note": "Cada mes, los revendedores reciben un kit de piezas y textos, el aviso anticipado de lanzamientos y novedades por un canal de difusión de WhatsApp propio.",
-          "items": [
-            "Convertí Extracto en tu negocio — Precios especiales para revendedores.",
-            "+200 fragancias en stock — Presentaciones para cada tipo de venta.",
-            "Soporte y herramientas — Atención, asistencia personalizada y material de marketing."
-          ]
         }
       ]
     },
     {
-      "id": "aplicaciones",
-      "navLabel": "Aplicaciones",
-      "kicker": "07 · Aplicaciones",
-      "title": "La marca en acción",
-      "lead": "Cómo se aplica la identidad en pantalla y en soportes físicos. Son maquetas conceptuales creadas para ilustrar el sistema, no fotografías de productos reales.",
+      "id": "revendedores",
+      "navLabel": "Revendedores",
+      "kicker": "08 · Revendedores",
+      "title": "Vende Extracto",
+      "lead": "La red de revendedores es el canal que más unidades vende. Esta sección resume cómo empezar, qué recibís y cómo representar bien a la marca.",
       "note": "",
-      "theme": "dark",
+      "theme": "light",
       "modules": [
         {
-          "id": "patrones",
-          "kind": "patterns",
-          "title": "Recursos gráficos",
-          "body": "Dos tramas construidas con el isotipo para fondos de historias, packaging y papelería. Se usan sobre negro o sobre oro, nunca sobre una foto.",
+          "id": "empezar",
+          "kind": "flow",
+          "title": "Cómo empezar",
+          "body": "Del primer mensaje a la primera reposición.",
           "media": "",
           "note": "",
           "items": [
-            "Trama de etiquetas",
-            "Ritmo alternado"
+            "Contacto — Escribí a la línea de revendedores por WhatsApp.",
+            "Condiciones — Te pasamos la lista de precios, el catálogo y cómo trabajamos.",
+            "Primer pedido — Elegí fragancias variadas: dulces, frescas e intensas.",
+            "Material — Usá este manual: textos, fotos y plantillas listas.",
+            "Reposición — Recibís el kit mensual y el aviso de cada lanzamiento."
           ]
         },
         {
-          "id": "app-frascos",
-          "kind": "showcase",
-          "category": "Producto",
-          "title": "Línea de best sellers",
-          "body": "Los cinco más vendidos con la etiqueta blanca y el código en serif.",
-          "media": "media/mockup-frascos.webp",
+          "id": "beneficios",
+          "kind": "cards",
+          "title": "Qué te ofrecemos",
+          "body": "Convertí Extracto en tu oportunidad de negocio.",
+          "media": "",
           "note": "",
-          "items": []
+          "items": [
+            "Precios especiales — Condiciones para revendedores, que se informan por la línea de revendedores.",
+            "+200 fragancias — Stock permanente y presentaciones para cada tipo de venta.",
+            "Kit mensual — Piezas listas para publicar y textos para copiar.",
+            "Aviso anticipado — Te enteras de cada lanzamiento una semana antes que el público.",
+            "Canal de difusión — Novedades, promos y stock por WhatsApp.",
+            "Soporte — Atención y asistencia personalizada para resolver dudas."
+          ]
         },
         {
-          "id": "app-caja",
-          "kind": "showcase",
-          "category": "Packaging",
-          "title": "Caja y frasco",
-          "body": "Caja negra con el logo vertical, filete dorado y el código en el frente.",
-          "media": "media/mockup-caja.webp",
+          "id": "practicas",
+          "kind": "tone",
+          "title": "Buenas prácticas",
+          "body": "Cómo representar bien a la marca en tus redes y en cada venta.",
+          "media": "",
           "note": "",
-          "items": []
-        },
-        {
-          "id": "app-regalo",
-          "kind": "showcase",
-          "category": "Packaging",
-          "title": "Bolsa y tarjeta de regalo",
-          "body": "Para el Día de la Madre: «Hay aromas que tienen nombre».",
-          "media": "media/mockup-regalo.webp",
-          "note": "",
-          "items": []
-        },
-        {
-          "id": "app-post",
-          "kind": "showcase",
-          "category": "Redes",
-          "title": "Publicación de Instagram",
-          "body": "Formato 4:5 con fondo negro, resplandor dorado y notas de la fragancia.",
-          "media": "media/mockup-post.webp",
-          "note": "",
-          "items": []
-        },
-        {
-          "id": "app-historia",
-          "kind": "showcase",
-          "category": "Redes",
-          "title": "Historias",
-          "body": "Teaser del lanzamiento con el número oculto y guía de regalo en fondo claro.",
-          "media": "media/mockup-historia.webp",
-          "note": "",
-          "items": []
-        },
-        {
-          "id": "app-whatsapp",
-          "kind": "showcase",
-          "category": "Atención",
-          "title": "Posventa por WhatsApp",
-          "body": "El mensaje del día 3, con recomendación y respuesta sobre envíos.",
-          "media": "media/mockup-whatsapp.webp",
-          "note": "",
-          "items": []
-        },
-        {
-          "id": "app-banner",
-          "kind": "showcase",
-          "category": "Web",
-          "title": "Banner del sitio",
-          "body": "Banner de campaña de 1440 × 360 sobre la cabecera negra del sitio.",
-          "media": "media/mockup-banner.webp",
-          "note": "",
-          "items": []
-        },
-        {
-          "id": "app-revendedores",
-          "kind": "showcase",
-          "category": "Revendedores",
-          "title": "Kit de revendedores",
-          "body": "Portada del catálogo, lista de best sellers y frascos de 30 ml.",
-          "media": "media/mockup-revendedores.webp",
-          "note": "",
-          "items": []
-        },
-        {
-          "id": "app-envio",
-          "kind": "showcase",
-          "category": "Envíos",
-          "title": "Caja de envío",
-          "body": "Cinta negra con el logotipo, etiqueta de envío y sello con el isotipo.",
-          "media": "media/mockup-envio.webp",
-          "note": "",
-          "items": []
-        },
-        {
-          "id": "app-tarjeta",
-          "kind": "showcase",
-          "category": "Papelería",
-          "title": "Tarjeta de agradecimiento",
-          "body": "Va dentro de cada pedido, con el usuario de Instagram y stickers del isotipo.",
-          "media": "media/mockup-tarjeta.webp",
-          "note": "",
-          "items": []
+          "items": [
+            "# Hacé || Evitá",
+            "Publicá con las plantillas y las fotos oficiales || Rehacer el logo o cambiarle el color",
+            "Nombrá cada fragancia por su código || Poner nombres de marcas originales en anuncios",
+            "Confirmá stock y precio antes de cerrar || Prometer plazos o precios sin consultar",
+            "Explicá que es un perfume de equivalencia || Decir que es el original",
+            "Derivá a soporte los cambios y reclamos || Resolver devoluciones por tu cuenta"
+          ]
         }
       ]
     },
     {
-      "id": "equipo",
-      "navLabel": "Equipo",
-      "kicker": "08 · Equipo",
-      "title": "Cómo trabajamos",
-      "lead": "Roles, pedidos de piezas, reuniones fijas y lanzamientos del área de marketing. Las decisiones de esta sección están propuestas y esperan aprobación.",
+      "id": "pedidos",
+      "navLabel": "Pedidos",
+      "kicker": "09 · Pedidos",
+      "title": "Pedidos de piezas",
+      "lead": "Cómo pedir una pieza al equipo de diseño: cuánto tiempo lleva cada tipo de pedido y un generador de brief con todo lo que diseño necesita saber.",
       "note": "",
       "theme": "white",
       "modules": [
         {
-          "id": "roles",
-          "kind": "cards",
-          "title": "Roles",
-          "body": "",
-          "media": "",
-          "note": "",
-          "items": [
-            "Matías, lidera — Estrategia, aprobaciones, coordinación con otras áreas y proveedores.",
-            "Diseño — Piezas gráficas y plantillas editables.",
-            "Community manager — Calendario, respuestas, tendencias y reporte cada 15 días.",
-            "Proveedores — Una producción de fotos y video por mes."
-          ]
-        },
-        {
-          "id": "flujo",
-          "kind": "flow",
-          "title": "Cómo se pide una pieza",
-          "body": "Una sola entrada para todos los pedidos. Sin brief no entra.",
-          "media": "",
-          "note": "",
-          "items": [
-            "Brief — Completar el generador de brief de esta sección.",
-            "Tablero — Se carga en el tablero de tareas, única entrada.",
-            "Diseño — La diseñadora toma el pedido según el plazo.",
-            "Aprobación — Matías aprueba, con hasta 2 rondas de cambios.",
-            "Publicación — La CM programa y guarda la pieza en la carpeta."
-          ]
-        },
-        {
           "id": "plazos",
           "kind": "stats",
           "title": "Plazos",
-          "body": "",
+          "body": "Días hábiles desde que el brief está completo. El generador calcula la fecha más temprana posible.",
           "media": "",
-          "note": "",
+          "note": "Los plazos de reel, campaña y producción de fotos son una propuesta a validar con el equipo.",
           "items": [
-            "3 días — Pieza nueva — Hábiles, desde el brief completo.",
-            "24 h — Adaptación de plantilla — Cambiar texto, código o formato.",
+            "24 h — Adaptación de plantilla — Cambiar texto, código, precio o formato.",
+            "3 días — Pieza nueva — Publicación, historia, flyer o anuncio.",
+            "5 días — Reel o video — Con el material ya grabado.",
+            "10 días — Campaña completa — Varias piezas para un lanzamiento o una fecha especial.",
+            "15 días — Producción de fotos — Agenda, producción y edición.",
             "2 por semana — Urgencias — Cupo máximo; se aprueban con Matías."
-          ]
-        },
-        {
-          "id": "rituales",
-          "kind": "cards",
-          "title": "Reuniones fijas",
-          "body": "",
-          "media": "",
-          "note": "",
-          "items": [
-            "Lunes — Planificación semanal.",
-            "Cada 15 días — Revisión de métricas.",
-            "Día 20 — Cierre del calendario del mes siguiente.",
-            "Mensual — Reunión con otras áreas."
           ]
         },
         {
           "id": "brief",
           "kind": "brief",
           "title": "Generador de brief",
-          "body": "Completá los campos y copiá el brief para pegarlo en el tablero. La fecha se chequea contra los plazos del área.",
+          "body": "Completá los campos y copiá el brief para pegarlo en el tablero de tareas o enviarlo por WhatsApp. El borrador queda guardado en este navegador.",
           "media": "",
           "note": "",
           "items": []
-        },
-        {
-          "id": "lanzamiento",
-          "kind": "checklist",
-          "title": "Checklist de lanzamiento",
-          "body": "El recorrido estándar de una fragancia nueva, de 30 días antes a 30 días después. Las tildes quedan guardadas en este navegador.",
-          "media": "",
-          "note": "",
-          "items": [
-            "T-30 | un mes antes | Confirmar código, notas, familia olfativa y precio; Definir concepto y mensaje principal; Coordinar stock y fecha con las otras áreas; Agendar la producción de fotos y video",
-            "T-21 | 3 semanas | Brief a la diseñadora y a la CM; Producción de fotos y video; Guiones de reels y teaser",
-            "T-14 | 2 semanas | Piezas aprobadas: post, historias, anuncios y banner web; Kit para revendedores armado; Textos de WhatsApp y respuestas frecuentes",
-            "T-7 | 1 semana | Aviso anticipado a revendedores con el kit; Producto cargado en el sitio (oculto); Campañas pagas armadas y en revisión",
-            "T-2 | 2 días | Teaser con el número oculto; Cuenta regresiva en historias",
-            "T0 | lanzamiento | Revelación en Instagram y TikTok; Producto visible en el sitio; Difusión por WhatsApp a clientes y revendedores; Pauta activa",
-            "T+1 | días 1 a 10 | Sostén: reseñas, reels de uso y respuestas a comentarios; Primer control de ventas y de la pauta",
-            "T+30 | un mes después | Informe: ventas, alcance, pauta y aprendizajes; Decidir si la fragancia entra al calendario fijo"
-          ]
         }
       ]
     }
   ],
   "palette": [
     {
-      "name": "Oro Extracto",
-      "hex": "#C89210",
-      "rgb": "200, 146, 16",
-      "cmyk": "0, 27, 92, 22"
-    },
-    {
-      "name": "Negro",
-      "hex": "#050505",
-      "rgb": "5, 5, 5",
-      "cmyk": "60, 40, 40, 100 (negro enriquecido sugerido)"
-    },
-    {
-      "name": "Grafito",
-      "hex": "#3A3A38",
-      "rgb": "58, 58, 56",
-      "cmyk": "0, 0, 3, 77"
-    },
-    {
-      "name": "Gris piedra",
-      "hex": "#C9C7C2",
-      "rgb": "201, 199, 194",
-      "cmyk": "0, 1, 3, 21"
+      "name": "Blanco",
+      "hex": "#FFFFFF",
+      "rgb": "255, 255, 255",
+      "cmyk": "0, 0, 0, 0"
     },
     {
       "name": "Blanco niebla",
@@ -670,45 +871,67 @@
       "cmyk": "0, 0, 2, 4"
     },
     {
-      "name": "Blanco",
-      "hex": "#FFFFFF",
-      "rgb": "255, 255, 255",
-      "cmyk": "0, 0, 0, 0"
+      "name": "Gris piedra",
+      "hex": "#C9C7C2",
+      "rgb": "201, 199, 194",
+      "cmyk": "0, 1, 3, 21"
+    },
+    {
+      "name": "Grafito",
+      "hex": "#3A3A38",
+      "rgb": "58, 58, 56",
+      "cmyk": "0, 0, 3, 77"
+    },
+    {
+      "name": "Negro",
+      "hex": "#050505",
+      "rgb": "5, 5, 5",
+      "cmyk": "60, 40, 40, 100 (negro enriquecido sugerido)"
+    },
+    {
+      "name": "Oro Extracto",
+      "hex": "#C89210",
+      "rgb": "200, 146, 16",
+      "cmyk": "0, 27, 92, 22",
+      "accent": true
     }
   ],
   "logos": {
     "principal": {
       "claro": "media/logo-extracto.svg",
-      "oscuro": "media/logo-extracto-white.svg",
-      "ambar": "media/logo-extracto-mono.svg"
+      "niebla": "media/logo-extracto.svg",
+      "oscuro": "media/logo-extracto-white.svg"
     },
     "vertical": {
       "claro": "media/logo-vertical.svg",
-      "oscuro": "media/logo-vertical-white.svg",
-      "ambar": "media/logo-vertical-mono.svg"
+      "niebla": "media/logo-vertical.svg",
+      "oscuro": "media/logo-vertical-white.svg"
     },
     "compacto": {
       "claro": "media/logo-compacto.svg",
-      "oscuro": "media/logo-compacto-white.svg",
-      "ambar": "media/logo-compacto-mono.svg"
+      "niebla": "media/logo-compacto.svg",
+      "oscuro": "media/logo-compacto-white.svg"
     },
     "logotipo": {
       "claro": "media/logotipo.svg",
-      "oscuro": "media/logotipo-white.svg",
-      "ambar": "media/logotipo-mono.svg"
+      "niebla": "media/logotipo.svg",
+      "oscuro": "media/logotipo-white.svg"
     },
     "isotipo": {
       "claro": "media/isotipo.svg",
-      "oscuro": "media/isotipo-white.svg",
-      "ambar": "media/isotipo-mono.svg"
+      "niebla": "media/isotipo.svg",
+      "oscuro": "media/isotipo-white.svg"
     }
   },
   "kit": {
-    "kicker": "Descargas",
+    "kicker": "10 · Kit",
+    "navLabel": "Kit",
     "title": "Kit de marca",
-    "lead": "Todo lo necesario para aplicar la identidad en redes, web, packaging y papelería, listo para descargar.",
+    "lead": "Logos, colores, fotos, plantillas de flyers y documentos, listos para descargar y usar.",
     "zip": "media/descargas/extracto-logos.zip",
-    "note": "El logo principal es el archivo oficial vectorizado. El isotipo y las versiones vertical y compacta son una propuesta construida con la E del logo: validalas con la diseñadora antes de producir.",
+    "photosZip": "media/descargas/extracto-fotos-producto.zip",
+    "catalogPdf": "media/descargas/extracto-catalogo.pdf",
+    "note": "El logo principal es el archivo oficial vectorizado. El monograma se reconstruyó a partir del body mist: validalo con la diseñadora antes de producir.",
     "letterheadDocx": "media/descargas/extracto-hoja-membretada.docx",
     "letterheadPdf": "media/descargas/extracto-hoja-membretada.pdf",
     "manualPdf": "media/descargas/extracto-manual-de-marca.pdf"
